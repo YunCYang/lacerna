@@ -1,25 +1,28 @@
 import React from 'react';
+import { UserProvider } from './userContext';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import Header from './header';
+import Home from './home';
+import Product from './product';
+import Account from './account';
+import Cart from './cart';
+import Footer from './footer';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: null,
-      isLoading: true
-    };
-  }
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <UserProvider value={null}>
+          <Header />
+          <Route exact path ="/" render={() => <Home />} />
+          <Route exact path="/product" render={() => <Product />}/>
+          <Route exact path="/account" render={() => <Account />}/>
+          <Route exact path="/cart" render={() => <Cart />}/>
+          <Footer />
+        </UserProvider>
+      </Switch>
+    </Router>
+  );
+};
 
-  componentDidMount() {
-    fetch('/api/health-check')
-      .then(res => res.json())
-      .then(data => this.setState({ message: data.message || data.error }))
-      .catch(err => this.setState({ message: err.message }))
-      .finally(() => this.setState({ isLoading: false }));
-  }
-
-  render() {
-    return this.state.isLoading
-      ? <h1>Testing connections...</h1>
-      : <h1>{this.state.message}</h1>;
-  }
-}
+export default App;
