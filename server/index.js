@@ -33,6 +33,14 @@ app.get('/api/user/:userId', (req, res, next) => {
     .then(result => res.status(200).json(result.rows[0]))
     .catch(err => next(err));
 });
+// logout
+app.post('/api/auth/logout', (req, res, next) => {
+  if (!req.session.cartId) next(new ClientError('session does not exist', 404));
+  else {
+    req.session.cartId = null;
+    res.status(204).json([]);
+  }
+});
 // login
 app.post('/api/auth/login', (req, res, next) => {
   if (!req.body.email) next(new ClientError('missing email', 400));
@@ -211,6 +219,16 @@ app.get('/api/product/cart/:userId/:login', (req, res, next) => {
         .catch(err => next(err));
     }
   } else next(new ClientError(`login status ${req.params.login} is not valid`, 400));
+});
+// get all types
+app.get('/api/type/all', (req, res, next) => {
+  const sql = `
+    select *
+      from "type";
+  `;
+  db.query(sql)
+    .then(result => res.status(200).json(result.rows))
+    .catch(err => next(err));
 });
 // get type by id
 app.get('/api/type/id/:typeId', (req, res, next) => {
