@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { SHOW_SHADOW } from '../common/constants/action-types';
 
-const Header = props => {
-  const [menuOpen, setMenuOpen] = React.useState(false);
+const Header = () => {
+  const menuOpen = useSelector(state => state.shadow.shadow);
+  const dispatch = useDispatch();
 
   const menuClick = () => menuOpen ? 'open' : 'close';
 
@@ -21,8 +24,7 @@ const Header = props => {
         </div>
         <div className={`nav-icon + ${menuClick()}`} onClick={
           () => {
-            setMenuOpen(!menuOpen);
-            props.setMenuOpen(!props.menuOpen);
+            dispatch({ type: SHOW_SHADOW, payload: !menuOpen });
           }
         }>
           <div></div>

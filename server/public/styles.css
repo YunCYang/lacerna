@@ -15,6 +15,7 @@ a {
 header {
   display: flex;
   justify-content: space-between;
+  height: 100px;
 }
 header > div {
   padding: 10px;
@@ -23,6 +24,7 @@ header div.logo p {
   font-family: "Cinzel Decorative", cursive;
   margin: 10px 0 0 10px;
   cursor: pointer;
+  font-size: 36px;
 }
 header div.menu {
   display: flex;
@@ -30,8 +32,8 @@ header div.menu {
 header div.menu > div {
   margin: 0 30px;
 }
-header i, header p {
-  font-size: 20px;
+header i {
+  font-size: 25px;
 }
 header i {
   margin: 10px 15px;
@@ -47,11 +49,12 @@ header .nav-icon div {
   margin: 4px 0;
   border-radius: 3px;
   transition: all 0.2s ease-in-out;
-  cursor: pointer;
 }
 header .nav-icon {
-  padding: 5px 0;
+  padding: 10px 0;
   width: 20px;
+  z-index: 3;
+  cursor: pointer;
 }
 header .nav-icon.open:before {
   transform: translateY(8px) rotate(135deg);
@@ -64,12 +67,20 @@ header .nav-icon.open div {
 }
 
 menu {
-  height: calc(100vh - 60px);
+  height: 100vh;
   position: fixed;
   right: 0;
+  top: 0;
   width: 300px;
   margin: 0;
   transition: 0.7s;
+  padding: 20px;
+  z-index: 2;
+  background-color: #fff;
+}
+menu > div:nth-child(2),
+menu div.product > div {
+  margin: 5px;
 }
 menu span {
   font-family: "EB Garamond", serif;
@@ -100,6 +111,10 @@ menu div.productList span {
   margin: 0 0 0 1em;
 }
 
+div.main {
+  min-height: calc( 100vh - 325px );
+}
+
 footer {
   font-family: "EB Garamond", serif;
   background-color: #15323A;
@@ -108,10 +123,30 @@ footer {
 }
 footer div {
   width: 50%;
-  padding: 10px;
+  padding: 10px 40px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 footer h4 {
   font-family: "Playfair Display", serif;
+  text-align: center;
+}
+footer p {
+  color: #8A999D;
+}
+footer div.link p {
+  text-align: center;
+  margin: 10px;
+}
+
+div.shadow {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 1;
 }
 
 /*# sourceMappingURL=styles.css.map */

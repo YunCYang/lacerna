@@ -17,6 +17,7 @@ a
 header
   display: flex
   justify-content: space-between
+  height: 100px
 
   >div
     padding: 10px
@@ -25,6 +26,7 @@ header
     font-family: $font-logo
     margin: 10px 0 0 10px
     cursor: pointer
+    font-size: 36px
 
   div.menu
     display: flex
@@ -32,8 +34,8 @@ header
     &>div
       margin: 0 30px
 
-  i, p
-    font-size: 20px
+  i
+    font-size: 25px
 
   i
     margin: 10px 15px
@@ -49,11 +51,12 @@ header
     margin: 4px 0
     border-radius: 3px
     transition: all .2s ease-in-out
-    cursor: pointer
 
   .nav-icon
-    padding: 5px 0
+    padding: 10px 0
     width: 20px
+    z-index: 3
+    cursor: pointer
 
     &.open:before
       transform: translateY(8px) rotate(135deg)
@@ -65,12 +68,20 @@ header
       transform: scale(0)
 
 menu
-  height: calc(100vh - 60px)
+  height: 100vh
   position: fixed
   right: 0
+  top: 0
   width: 300px
   margin: 0
   transition: 0.7s
+  padding: 20px
+  z-index: 2
+  background-color: #fff
+
+  > div:nth-child(2),
+  div.product > div
+    margin: 5px
 
   span
     font-family: $font-content
@@ -100,6 +111,9 @@ menu
     span
       margin: 0 0 0 1em
 
+div.main
+    min-height: calc( 100vh - 325px )
+
 footer
   font-family: $font-content
   background-color: #15323A
@@ -108,7 +122,26 @@ footer
 
   div
     width: 50%
-    padding: 10px
+    padding: 10px 40px
+    max-width: 400px
+    margin: 0 auto
 
   h4
     font-family: $font-display
+    text-align: center
+
+  p
+    color: #8A999D
+
+  div.link p
+    text-align: center
+    margin: 10px
+
+div.shadow
+  position: fixed
+  top: 0
+  width: 100vw
+  height: 100vh
+  background-color: #000
+  opacity: 0.5
+  z-index: 1

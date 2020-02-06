@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SELECT_TYPE } from '../common/constants/action-types';
 
-const Sidebar = props => {
+const Sidebar = () => {
   const [types, setTypes] = React.useState([]);
   const [prodShown, setProdShown] = React.useState(false);
+  const [showMenu, setShowMenu] = React.useState('closed');
   const dispatch = useDispatch();
-
-  const showMenu = () => props.menuOpen ? 'shown' : 'closed';
+  const menuOpen = useSelector(state => state.shadow.shadow);
 
   React.useEffect(
     () => {
@@ -18,6 +18,13 @@ const Sidebar = props => {
     }, []
   );
 
+  React.useEffect(
+    () => {
+      if (menuOpen) setShowMenu('shown');
+      else setShowMenu('closed');
+    }, [menuOpen]
+  );
+
   const createProductList = () => {
     return types.map(item => <span key={`type${item.typeId}`} onClick={
       e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
@@ -25,7 +32,7 @@ const Sidebar = props => {
   };
 
   return (
-    <menu className={showMenu()}>
+    <menu className={showMenu}>
       <div className='product'>
         <div className='productTitle' onClick={
           () => setProdShown(!prodShown)
