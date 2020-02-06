@@ -33,6 +33,14 @@ app.get('/api/user/:userId', (req, res, next) => {
     .then(result => res.status(200).json(result.rows[0]))
     .catch(err => next(err));
 });
+// logout
+app.post('/api/auth/logout', (req, res, next) => {
+  if (!req.session.cartId) next(new ClientError('session does not exist', 404));
+  else {
+    req.session.cartId = null;
+    res.status(204).json([]);
+  }
+});
 // login
 app.post('/api/auth/login', (req, res, next) => {
   if (!req.body.email) next(new ClientError('missing email', 400));
@@ -138,17 +146,32 @@ app.get('/api/product/name/:productName', (req, res, next) => {
     .catch(err => next(err));
 });
 // get products by group
-app.get('/api/product/type/:typeId', (req, res, next) => {
-  intTest(req.params.typeId, next);
-  const sql = `
+app.get('/api/product/type/:typeName', (req, res, next) => {
+  const checkSql = `
+    select *
+      from "type"
+     where "typeName" = $1;
+  `;
+  const getSql = `
        select *
          from "product" p
     left join "productGroup" g on p."productId" = g."productId"
-        where "typeId" = $1;
+        where "typeId" = (
+          select "typeId"
+            from "type"
+           where "typeName" = $1
+        );
   `;
-  const value = [parseInt(req.params.typeId)];
-  db.query(sql, value)
-    .then(result => res.status(200).json(result.rows))
+  const value = [req.params.typeName];
+  db.query(checkSql, value)
+    .then(checkResult => {
+      if (!checkResult.rows[0]) next(new ClientError(`type name ${req.params.typeName} does not exist`, 404));
+      else {
+        db.query(getSql, value)
+          .then(result => res.status(200).json(result.rows))
+          .catch(err => next(err));
+      }
+    })
     .catch(err => next(err));
 });
 // get products by cart
@@ -211,6 +234,16 @@ app.get('/api/product/cart/:userId/:login', (req, res, next) => {
         .catch(err => next(err));
     }
   } else next(new ClientError(`login status ${req.params.login} is not valid`, 400));
+});
+// get all types
+app.get('/api/type/all', (req, res, next) => {
+  const sql = `
+    select *
+      from "type";
+  `;
+  db.query(sql)
+    .then(result => res.status(200).json(result.rows))
+    .catch(err => next(err));
 });
 // get type by id
 app.get('/api/type/id/:typeId', (req, res, next) => {

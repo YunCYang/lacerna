@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative|EB+Garamond|Playfair+Display&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+header > div {
+  padding: 10px;
+}
+header div.logo p {
+  font-family: "Cinzel Decorative", cursive;
+  margin: 10px 0 0 10px;
+  cursor: pointer;
+}
+header div.menu {
+  display: flex;
+}
+header div.menu > div {
+  margin: 0 30px;
+}
+header i, header p {
+  font-size: 20px;
+}
+header i {
+  margin: 10px 15px;
+  cursor: pointer;
+}
+header .nav-icon::after,
+header .nav-icon::before,
+header .nav-icon div {
+  display: block;
+  content: "";
+  background-color: #000;
+  height: 4px;
+  margin: 4px 0;
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+header .nav-icon {
+  padding: 5px 0;
+  width: 20px;
+}
+header .nav-icon.open:before {
+  transform: translateY(8px) rotate(135deg);
+}
+header .nav-icon.open:after {
+  transform: translateY(-8px) rotate(-135deg);
+}
+header .nav-icon.open div {
+  transform: scale(0);
+}
+
+menu {
+  height: calc(100vh - 60px);
+  position: fixed;
+  right: 0;
+  width: 300px;
+  margin: 0;
+  transition: 0.7s;
+}
+menu span {
+  font-family: "EB Garamond", serif;
+  cursor: pointer;
+}
+menu.closed {
+  transform: translateX(300px);
+}
+menu span.icon {
+  font-size: 1.2em;
+  margin: 0 5px;
+  font-family: "Playfair Display", serif;
+}
+menu div.productList {
+  max-height: 300px;
+  height: auto;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+menu div.productList a {
+  display: flex;
+  flex-direction: column;
+}
+menu div.productList.hidden {
+  max-height: 0;
+}
+menu div.productList span {
+  margin: 0 0 0 1em;
+}
+
+footer {
+  font-family: "EB Garamond", serif;
+  background-color: #15323A;
+  color: #fff;
+  display: flex;
+}
+footer div {
+  width: 50%;
+  padding: 10px;
+}
+footer h4 {
+  font-family: "Playfair Display", serif;
+}
+
+/*# sourceMappingURL=styles.css.map */
