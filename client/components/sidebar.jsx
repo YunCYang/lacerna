@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { SELECT_TYPE } from '../common/constants/action-types';
 
 const Sidebar = props => {
   const [types, setTypes] = React.useState([]);
   const [prodShown, setProdShown] = React.useState(false);
+  const dispatch = useDispatch();
 
   const showMenu = () => props.menuOpen ? 'shown' : 'closed';
 
@@ -16,7 +19,9 @@ const Sidebar = props => {
   );
 
   const createProductList = () => {
-    return types.map(item => <span key={`type${item.typeId}`}>{item.typeName}</span>);
+    return types.map(item => <span key={`type${item.typeId}`} onClick={
+      e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
+    }>{item.typeName}</span>);
   };
 
   return (
@@ -30,7 +35,9 @@ const Sidebar = props => {
         </div>
         <div className={`productList ${prodShown ? 'shown' : 'hidden'}`}>
           <Link to='/product'>
-            <span>All Products</span>
+            <span onClick={
+              e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
+            }>All Products</span>
             {createProductList()}
           </Link>
         </div>

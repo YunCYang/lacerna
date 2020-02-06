@@ -100,4 +100,18 @@ menu div.productList span {
   margin: 0 0 0 1em;
 }
 
+footer {
+  font-family: "EB Garamond", serif;
+  background-color: #15323A;
+  color: #fff;
+  display: flex;
+}
+footer div {
+  width: 50%;
+  padding: 10px;
+}
+footer h4 {
+  font-family: "Playfair Display", serif;
+}
+
 /*# sourceMappingURL=styles.css.map */

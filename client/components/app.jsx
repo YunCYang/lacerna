@@ -19,9 +19,9 @@ const App = () => {
           <Header setMenuOpen={setMenuOpen} menuOpen={menuOpen} />
           <Sidebar menuOpen={menuOpen} />
           <Route exact path="/" render={() => <Home />} />
-          <Route exact path="/product" render={() => <Product />}/>
-          <Route exact path="/account" render={() => <Account />}/>
-          <Route exact path="/cart" render={() => <Cart />}/>
+          <Route exact path="/product" render={() => <Product />} />
+          <Route exact path="/account" render={() => <Account />} />
+          <Route exact path="/cart" render={() => <Cart />} />
           <Footer />
         </UserProvider>
       </Switch>
