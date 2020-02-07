@@ -97,7 +97,7 @@ menu
   margin: 0
   transition: 0.7s
   padding: 20px
-  z-index: 2
+  z-index: 3
   background-color: #fff
 
   > div:nth-child(2),
@@ -141,17 +141,20 @@ div.main
       display: flex
       flex-wrap: wrap
       padding: 1%
+      position: relative
 
       div.container
         width: 30%
         display: flex
         margin: 1%
         flex-direction: column
+        position: relative
 
         div.image-container,
         div.info-container
           width: 100%
           padding: 1%
+          position: relative
 
         div.info-container
           display: flex
@@ -167,10 +170,22 @@ div.main
               font-family: $font-content
 
         img
+          position: absolute
           width: 100%
+          transition: all 0.3s ease-in-out
+          top: 5%
+
+        .hidden
+          opacity: 0
+
+        .shown
+          transform: scale(1.1)
 
         div.image-container
           object-fit: contain
+          width: 100%
+          height: 33vw
+          overflow: hidden
 
 footer
   font-family: $font-content
@@ -202,4 +217,4 @@ div.shadow
   height: 100vh
   background-color: #000
   opacity: 0.5
-  z-index: 1
+  z-index: 2

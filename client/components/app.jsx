@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProvider } from './userContext';
+// import { UserProvider } from './userContext';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Header from './header';
 import Sidebar from './sidebar';
@@ -14,7 +14,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <UserProvider value={null}>
+        <>
           <Header />
           <Sidebar />
           <div className='main'>
@@ -25,7 +25,7 @@ const App = () => {
           </div>
           <Footer />
           <Shadow />
-        </UserProvider>
+        </>
       </Switch>
     </Router>
   );

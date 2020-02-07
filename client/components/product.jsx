@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ProductCard from './productCard';
+import ProductView from './productView';
 
 const Product = () => {
   const selected = useSelector(state => {
@@ -59,9 +60,15 @@ const Product = () => {
     if (isLoading) {
       return <h1>Loading...</h1>;
     } else {
-      if (productList.length) {
-        return productList.map((item, index) => <ProductCard product={item} key={`item${index}`} />);
-      } else return null;
+      if (selected.type === 'product') {
+        if (productList.productName) {
+          return <ProductView product={productList} />;
+        }
+      } else {
+        if (productList.length) {
+          return productList.map((item, index) => <ProductCard product={item} key={`item${index}`} />);
+        } else return null;
+      }
     }
   };
 

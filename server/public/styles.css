@@ -96,7 +96,7 @@ menu {
   margin: 0;
   transition: 0.7s;
   padding: 20px;
-  z-index: 2;
+  z-index: 3;
   background-color: #fff;
 }
 menu > div:nth-child(2),
@@ -141,17 +141,20 @@ div.main div.product {
   display: flex;
   flex-wrap: wrap;
   padding: 1%;
+  position: relative;
 }
 div.main div.product div.container {
   width: 30%;
   display: flex;
   margin: 1%;
   flex-direction: column;
+  position: relative;
 }
 div.main div.product div.container div.image-container,
 div.main div.product div.container div.info-container {
   width: 100%;
   padding: 1%;
+  position: relative;
 }
 div.main div.product div.container div.info-container {
   display: flex;
@@ -167,10 +170,22 @@ div.main div.product div.container div.info-container div span {
   font-family: "EB Garamond", serif;
 }
 div.main div.product div.container img {
+  position: absolute;
   width: 100%;
+  transition: all 0.3s ease-in-out;
+  top: 5%;
+}
+div.main div.product div.container .hidden {
+  opacity: 0;
+}
+div.main div.product div.container .shown {
+  transform: scale(1.1);
 }
 div.main div.product div.container div.image-container {
   object-fit: contain;
+  width: 100%;
+  height: 33vw;
+  overflow: hidden;
 }
 
 footer {
@@ -204,7 +219,7 @@ div.shadow {
   height: 100vh;
   background-color: #000;
   opacity: 0.5;
-  z-index: 1;
+  z-index: 2;
 }
 
 /*# sourceMappingURL=styles.css.map */
