@@ -145,6 +145,18 @@ app.get('/api/product/name/:productName', (req, res, next) => {
     .then(result => res.status(200).json(result.rows[0]))
     .catch(err => next(err));
 });
+// get product by similar name
+app.get('/api/product/name/search/:productName', (req, res, next) => {
+  const sql = `
+    select *
+      from "product"
+     where "productName" ~* $1;
+  `;
+  const value = [`.*${req.params.productName}.*`];
+  db.query(sql, value)
+    .then(result => res.status(200).json(result.rows))
+    .catch(err => next(err));
+});
 // get products by group
 app.get('/api/product/type/:typeName', (req, res, next) => {
   const checkSql = `

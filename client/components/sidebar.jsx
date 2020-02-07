@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { SELECT_TYPE } from '../common/constants/action-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { SEARCH } from '../common/constants/action-types';
 
-const Sidebar = props => {
+const Sidebar = () => {
   const [types, setTypes] = React.useState([]);
   const [prodShown, setProdShown] = React.useState(false);
+  const [showMenu, setShowMenu] = React.useState('closed');
   const dispatch = useDispatch();
-
-  const showMenu = () => props.menuOpen ? 'shown' : 'closed';
+  const menuOpen = useSelector(state => state.shadow.shadow);
 
   React.useEffect(
     () => {
@@ -18,14 +18,27 @@ const Sidebar = props => {
     }, []
   );
 
+  React.useEffect(
+    () => {
+      if (menuOpen) setShowMenu('shown');
+      else setShowMenu('closed');
+    }, [menuOpen]
+  );
+
   const createProductList = () => {
     return types.map(item => <span key={`type${item.typeId}`} onClick={
-      e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
+      e => dispatch({
+        type: SEARCH,
+        payload: {
+          type: 'type',
+          value: e.currentTarget.textContent
+        }
+      })
     }>{item.typeName}</span>);
   };
 
   return (
-    <menu className={showMenu()}>
+    <menu className={showMenu}>
       <div className='product'>
         <div className='productTitle' onClick={
           () => setProdShown(!prodShown)
@@ -36,8 +49,15 @@ const Sidebar = props => {
         <div className={`productList ${prodShown ? 'shown' : 'hidden'}`}>
           <Link to='/product'>
             <span onClick={
-              e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
-            }>All Products</span>
+              e => {
+                dispatch({
+                  type: SEARCH,
+                  payload: {
+                    type: 'type',
+                    value: 'all'
+                  }
+                });
+              }}>All Products</span>
             {createProductList()}
           </Link>
         </div>

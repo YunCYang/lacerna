@@ -5,6 +5,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 a {
@@ -15,6 +16,7 @@ a {
 header {
   display: flex;
   justify-content: space-between;
+  height: 100px;
 }
 header > div {
   padding: 10px;
@@ -23,6 +25,7 @@ header div.logo p {
   font-family: "Cinzel Decorative", cursive;
   margin: 10px 0 0 10px;
   cursor: pointer;
+  font-size: 36px;
 }
 header div.menu {
   display: flex;
@@ -30,12 +33,32 @@ header div.menu {
 header div.menu > div {
   margin: 0 30px;
 }
-header i, header p {
-  font-size: 20px;
-}
-header i {
+header div.menu > div > i {
+  font-size: 25px;
   margin: 10px 15px;
   cursor: pointer;
+}
+header input {
+  line-height: 25px;
+  font-family: "EB Garamond", serif;
+  border-radius: 4px;
+  border: 1px solid #C5CCCE;
+  color: #8A999D;
+  padding: 0 5px 0 5px;
+  position: relative;
+  left: -50px;
+}
+header input:focus {
+  outline: none;
+  border-color: #8A999D;
+}
+header div.form {
+  transition: transform 0.7s ease, opacity 2s;
+}
+header div.form.hidden {
+  transform: translateY(-130px);
+  opacity: 0;
+  transition: transform 0.7s ease, opacity 0.3s ease;
 }
 header .nav-icon::after,
 header .nav-icon::before,
@@ -47,11 +70,12 @@ header .nav-icon div {
   margin: 4px 0;
   border-radius: 3px;
   transition: all 0.2s ease-in-out;
-  cursor: pointer;
 }
 header .nav-icon {
-  padding: 5px 0;
+  padding: 10px 0;
   width: 20px;
+  z-index: 3;
+  cursor: pointer;
 }
 header .nav-icon.open:before {
   transform: translateY(8px) rotate(135deg);
@@ -64,12 +88,20 @@ header .nav-icon.open div {
 }
 
 menu {
-  height: calc(100vh - 60px);
-  position: fixed;
+  height: 100vh;
+  position: absolute;
   right: 0;
+  top: 0;
   width: 300px;
   margin: 0;
   transition: 0.7s;
+  padding: 20px;
+  z-index: 2;
+  background-color: #fff;
+}
+menu > div:nth-child(2),
+menu div.product > div {
+  margin: 5px;
 }
 menu span {
   font-family: "EB Garamond", serif;
@@ -100,6 +132,47 @@ menu div.productList span {
   margin: 0 0 0 1em;
 }
 
+div.main {
+  min-height: calc( 100vh - 325px );
+  width: 100vw;
+}
+div.main div.product {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1%;
+}
+div.main div.product div.container {
+  width: 30%;
+  display: flex;
+  margin: 1%;
+  flex-direction: column;
+}
+div.main div.product div.container div.image-container,
+div.main div.product div.container div.info-container {
+  width: 100%;
+  padding: 1%;
+}
+div.main div.product div.container div.info-container {
+  display: flex;
+  flex-direction: column;
+}
+div.main div.product div.container div.info-container div {
+  display: flex;
+  padding: 1%;
+}
+div.main div.product div.container div.info-container div span {
+  margin: auto;
+  text-align: center;
+  font-family: "EB Garamond", serif;
+}
+div.main div.product div.container img {
+  width: 100%;
+}
+div.main div.product div.container div.image-container {
+  object-fit: contain;
+}
+
 footer {
   font-family: "EB Garamond", serif;
   background-color: #15323A;
@@ -108,10 +181,30 @@ footer {
 }
 footer div {
   width: 50%;
-  padding: 10px;
+  padding: 10px 40px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 footer h4 {
   font-family: "Playfair Display", serif;
+  text-align: center;
+}
+footer p {
+  color: #8A999D;
+}
+footer div.link p {
+  text-align: center;
+  margin: 10px;
+}
+
+div.shadow {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 1;
 }
 
 /*# sourceMappingURL=styles.css.map */
