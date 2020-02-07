@@ -1,8 +1,8 @@
-import type from './reducers/type';
 import shadow from './reducers/shadow';
+import search from './reducers/search';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
-  type,
-  shadow
+  shadow,
+  search
 });

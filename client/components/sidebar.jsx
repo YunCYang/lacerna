@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SELECT_TYPE } from '../common/constants/action-types';
+import { SEARCH } from '../common/constants/action-types';
 
 const Sidebar = () => {
   const [types, setTypes] = React.useState([]);
@@ -27,7 +27,13 @@ const Sidebar = () => {
 
   const createProductList = () => {
     return types.map(item => <span key={`type${item.typeId}`} onClick={
-      e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
+      e => dispatch({
+        type: SEARCH,
+        payload: {
+          type: 'type',
+          value: e.currentTarget.textContent
+        }
+      })
     }>{item.typeName}</span>);
   };
 
@@ -43,8 +49,15 @@ const Sidebar = () => {
         <div className={`productList ${prodShown ? 'shown' : 'hidden'}`}>
           <Link to='/product'>
             <span onClick={
-              e => dispatch({ type: SELECT_TYPE, payload: e.currentTarget.textContent })
-            }>All Products</span>
+              e => {
+                dispatch({
+                  type: SEARCH,
+                  payload: {
+                    type: 'type',
+                    value: 'all'
+                  }
+                });
+              }}>All Products</span>
             {createProductList()}
           </Link>
         </div>

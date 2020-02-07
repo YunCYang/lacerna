@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SHOW_SHADOW } from '../common/constants/action-types';
+import { SHOW_SHADOW, SEARCH } from '../common/constants/action-types';
 
-const Header = () => {
+const Header = props => {
   const menuOpen = useSelector(state => state.shadow.shadow);
+  const [searchShown, setSearchShown] = React.useState(false);
   const dispatch = useDispatch();
 
   const menuClick = () => menuOpen ? 'open' : 'close';
@@ -18,9 +19,27 @@ const Header = () => {
       </div>
       <div className='menu'>
         <div>
-          <i className="fas fa-search"></i>
+          <i className="fas fa-search" onClick={
+            () => setSearchShown(!searchShown)
+          }></i>
           <i className="fas fa-user"></i>
           <i className="fas fa-shopping-cart"></i>
+          <div className={`form ${searchShown ? 'shown' : 'hidden'}`}>
+            <input type="text" placeholder='product name' onKeyPress={
+              e => {
+                if (e.key === 'Enter') {
+                  props.history.push('/product');
+                  dispatch({
+                    type: SEARCH,
+                    payload: {
+                      type: 'productSearch',
+                      value: e.target.value
+                    }
+                  });
+                }
+              }
+            } />
+          </div>
         </div>
         <div className={`nav-icon + ${menuClick()}`} onClick={
           () => {
@@ -34,6 +53,6 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);
 
 // <i class="fas fa-user-alt-slash"></i>

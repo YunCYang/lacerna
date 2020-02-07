@@ -32,12 +32,32 @@ header div.menu {
 header div.menu > div {
   margin: 0 30px;
 }
-header i {
+header div.menu > div > i {
   font-size: 25px;
-}
-header i {
   margin: 10px 15px;
   cursor: pointer;
+}
+header input {
+  line-height: 25px;
+  font-family: "EB Garamond", serif;
+  border-radius: 4px;
+  border: 1px solid #C5CCCE;
+  color: #8A999D;
+  padding: 0 5px 0 5px;
+  position: relative;
+  left: -50px;
+}
+header input:focus {
+  outline: none;
+  border-color: #8A999D;
+}
+header div.form {
+  transition: transform 0.7s ease, opacity 2s;
+}
+header div.form.hidden {
+  transform: translateY(-130px);
+  opacity: 0;
+  transition: transform 0.7s ease, opacity 0.3s ease;
 }
 header .nav-icon::after,
 header .nav-icon::before,
