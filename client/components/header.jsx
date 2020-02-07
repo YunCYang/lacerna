@@ -10,6 +10,15 @@ const Header = props => {
 
   const menuClick = () => menuOpen ? 'open' : 'close';
 
+  React.useEffect(
+    () => {
+      const unlisten = props.history.listen(() => {
+        setSearchShown(false);
+      });
+      return () => unlisten();
+    }
+  );
+
   return (
     <header>
       <div className='logo'>

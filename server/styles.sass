@@ -9,6 +9,7 @@ $font-display: 'Playfair Display', serif
 
 body
   margin: 0
+  overflow-x: hidden
 
 a
   text-decoration: none
@@ -89,7 +90,7 @@ header
 
 menu
   height: 100vh
-  position: fixed
+  position: absolute
   right: 0
   top: 0
   width: 300px
@@ -133,6 +134,43 @@ menu
 
 div.main
     min-height: calc( 100vh - 325px )
+    width: 100vw
+
+    div.product
+      width: 100%
+      display: flex
+      flex-wrap: wrap
+      padding: 1%
+
+      div.container
+        width: 30%
+        display: flex
+        margin: 1%
+        flex-direction: column
+
+        div.image-container,
+        div.info-container
+          width: 100%
+          padding: 1%
+
+        div.info-container
+          display: flex
+          flex-direction: column
+
+          div
+            display: flex
+            padding: 1%
+
+            span
+              margin: auto
+              text-align: center
+              font-family: $font-content
+
+        img
+          width: 100%
+
+        div.image-container
+          object-fit: contain
 
 footer
   font-family: $font-content

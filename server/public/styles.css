@@ -5,6 +5,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 a {
@@ -88,7 +89,7 @@ header .nav-icon.open div {
 
 menu {
   height: 100vh;
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 0;
   width: 300px;
@@ -133,6 +134,43 @@ menu div.productList span {
 
 div.main {
   min-height: calc( 100vh - 325px );
+  width: 100vw;
+}
+div.main div.product {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1%;
+}
+div.main div.product div.container {
+  width: 30%;
+  display: flex;
+  margin: 1%;
+  flex-direction: column;
+}
+div.main div.product div.container div.image-container,
+div.main div.product div.container div.info-container {
+  width: 100%;
+  padding: 1%;
+}
+div.main div.product div.container div.info-container {
+  display: flex;
+  flex-direction: column;
+}
+div.main div.product div.container div.info-container div {
+  display: flex;
+  padding: 1%;
+}
+div.main div.product div.container div.info-container div span {
+  margin: auto;
+  text-align: center;
+  font-family: "EB Garamond", serif;
+}
+div.main div.product div.container img {
+  width: 100%;
+}
+div.main div.product div.container div.image-container {
+  object-fit: contain;
 }
 
 footer {

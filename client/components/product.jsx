@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import ProductCard from './productCard';
+import ProductCard from './productCard';
 
 const Product = () => {
   const selected = useSelector(state => {
@@ -11,71 +11,63 @@ const Product = () => {
       };
     } else return null;
   });
-  // const selectedType = useSelector(state => {
-  //   if (state.type) return state.type.type;
-  //   else return null;
-  // });
-  // const searchType = useSelector(state => {
-  //   if (state.search) return state.search.search;
-  //   else return null;
-  // });
-  // const searchProduct = useSelector(state => {
-  //   if (state.prosearch) return state.prosearch.prosearch;
-  //   else return null;
-  // });
-  // const [type, setType] = React.useState(null);
-  // const [proSearch, setProSearch] = React.useState('');
-  // const [productList, setProductList] = React.useState([]);
-  // const [pageLoad, setPageLoad] = React.useState(false);
-
-  // React.useEffect(
-  //   () => {
-  //     setPageLoad(true);
-  //   }, []
-  // );
+  const [productList, setProductList] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(
     () => {
-      // console.log(selected);
-      // if (pageLoad) {
-      // console.log(searchType);
-      // if (searchType === 'type') {
-      //   setType(selectedType);
-      //   if (type && selectedType === type) {
-      //     if (type === 'All Products') {
-      //       fetch('/api/product/all')
-      //         .then(res => res.json())
-      //         .then(res => {
-      //           console.log(res);
-      //           setProductList(res);
-      //         });
-      //     } else {
-      //       fetch(`/api/product/type/${type}`)
-      //         .then(res => res.json())
-      //         .then(res => setProductList(res));
-      //     }
-      //   }
-      // } else if (searchType === 'proSearch') {
-      //   setProSearch(searchProduct);
-      //   if (proSearch && searchProduct === proSearch) {
-      //     fetch(`/api/product/name/search/${proSearch}`)
-      //       .then(res => res.json())
-      //       .then(res => console.log(res));
-      //   }
-      // }
-      // return setPageLoad(false);
-    }, [selected]
-    // }
+      setIsLoading(true);
+      let isSubscribed = true;
+      if (selected.type === 'type') {
+        if (selected.value === 'all') {
+          fetch('/api/product/all')
+            .then(res => res.json())
+            .then(res => {
+              if (isSubscribed) setProductList(res);
+            })
+            .finally(() => setIsLoading(false));
+        } else {
+          fetch(`/api/product/type/${selected.value}`)
+            .then(res => res.json())
+            .then(res => {
+              if (isSubscribed) setProductList(res);
+            })
+            .finally(() => setIsLoading(false));
+        }
+      } else if (selected.type === 'productSearch') {
+        fetch(`/api/product/name/search/${selected.value}`)
+          .then(res => res.json())
+          .then(res => {
+            if (isSubscribed) setProductList(res);
+          })
+          .finally(() => setIsLoading(false));
+      } else if (selected.type === 'product') {
+        fetch(`/api/product/name/${selected.value}`)
+          .then(res => res.json())
+          .then(res => {
+            if (isSubscribed) setProductList(res);
+          })
+          .finally(() => setIsLoading(false));
+      }
+      return () => {
+        isSubscribed = false;
+      };
+    }, [selected.value]
   );
 
-  // const createProductList = () => {
-  //   if (productList.length) {
-  //     productList.map(item => <ProductCard product={item} key={`item${item.ProductId}`} />);
-  //   } else return null;
-  // };
+  const createProductList = () => {
+    if (isLoading) {
+      return <h1>Loading...</h1>;
+    } else {
+      if (productList.length) {
+        return productList.map((item, index) => <ProductCard product={item} key={`item${index}`} />);
+      } else return null;
+    }
+  };
 
   return (
-    <div>
+    <div className='product'>
+      {createProductList()}
     </div>
   );
 };
