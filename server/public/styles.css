@@ -298,6 +298,49 @@ div.main div.product-detail div.detail-desc span {
   font-family: "EB Garamond", serif;
 }
 
+div.account {
+  min-height: calc( 100vh - 100px );
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5% 0;
+}
+div.account > div:first-child span {
+  font-size: 2em;
+  font-family: "Playfair Display", serif;
+}
+div.account > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+}
+div.account > div:nth-child(2) div {
+  display: flex;
+  flex-direction: column;
+  padding: 5% 0;
+  font-family: "EB Garamond", serif;
+}
+div.account > div:nth-child(3) * {
+  margin: 10px;
+  font-family: "EB Garamond", serif;
+}
+div.account > div:nth-child(3) button {
+  border: 1px solid #8A999D;
+  padding: 5px 10px;
+  color: #8A999D;
+  border-radius: 5px;
+  cursor: pointer;
+}
+div.account > div:nth-child(3) button:hover {
+  background-color: #50666C;
+  color: #FFF;
+  border-color: #50666C;
+}
+div.account > div:nth-child(3) span {
+  text-decoration: underline;
+}
+
 footer {
   font-family: "EB Garamond", serif;
   background-color: #15323A;

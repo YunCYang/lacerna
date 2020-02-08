@@ -303,6 +303,49 @@ div.main
       span
         font-family: $font-content
 
+div.account
+  min-height: calc( 100vh - 100px )
+  width: 100vw
+  display: flex
+  flex-direction: column
+  justify-content: space-evenly
+  align-items: center
+  padding: 5% 0
+
+  >div:first-child span
+    font-size: 2em
+    font-family: $font-display
+
+  >div:nth-child(2)
+    display: flex
+    flex-direction: column
+
+    div
+      display: flex
+      flex-direction: column
+      padding: 5% 0
+      font-family: $font-content
+
+  >div:nth-child(3)
+    *
+      margin: 10px
+      font-family: $font-content
+
+    button
+      border: 1px solid #8A999D
+      padding: 5px 10px
+      color: #8A999D
+      border-radius: 5px
+      cursor: pointer
+
+    button:hover
+      background-color: #50666C
+      color: #FFF
+      border-color: #50666C
+
+    span
+      text-decoration: underline
+
 footer
   font-family: $font-content
   background-color: #15323A
