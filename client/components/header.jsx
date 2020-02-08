@@ -32,7 +32,9 @@ const Header = props => {
             () => setSearchShown(!searchShown)
           }></i>
           <i className="fas fa-user"></i>
-          <i className="fas fa-shopping-cart"></i>
+          <Link to='/cart'>
+            <i className="fas fa-shopping-cart"></i>
+          </Link>
           <div className={`form ${searchShown ? 'shown' : 'hidden'}`}>
             <input type="text" placeholder='product name' onKeyPress={
               e => {

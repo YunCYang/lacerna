@@ -35,7 +35,7 @@ header
     &>div
       margin: 0 30px
 
-  div.menu>div>i
+  div.menu>div i
     font-size: 25px
     margin: 10px 15px
     cursor: pointer
@@ -200,11 +200,21 @@ div.main
       width: 100%
       padding: 1%
 
+    div:first-child
+      margin: 0 0 10px 30px
+
+      span
+        cursor: pointer
+
+
     div.detail-info
       >div
         width: 50%
         padding: 1%
         object-fit: contain
+
+        >div:last-child
+          min-height: 120px
 
       div.detail-info-img
         img
@@ -213,14 +223,85 @@ div.main
       div.detail-info-info
         display: flex
         flex-direction: column
-        padding: 8% 5%
+        padding: 5% 5%
         justify-content: space-evenly
 
         >div
           font-family: $font-content
+          margin: 1px 0
 
         div.detail-info-name
           font-family: $font-display
+
+        div.detail-info-form
+          input[type='radio']
+            opacity: 0
+            width: 0
+
+          >div
+            display: flex
+            margin: 40px 0
+
+          label
+            border: 1px solid #C5CCCE
+            border-radius: 5px
+            padding: 5px 10px
+            color: #C5CCCE
+            cursor: pointer
+
+          input[type='radio']:checked + label
+            border-color: #FFF
+            background-color: #15323A
+            color: #FFF
+
+          label:hover
+            border-color: #FFF
+            background-color: #8A999D
+            color: #FFF
+
+          input[type='text']
+            padding: 4px 10px
+            width: 4em
+            color: #15323A
+            text-align: center
+
+          button
+            border: 1px solid #8A999D
+            padding: 5px 10px
+            color: #8A999D
+            border-radius: 5px
+
+          button:hover
+            background-color: #50666C
+            color: #FFF
+            border-color: #50666C
+
+          div.quantity
+            margin-right: 20px
+
+            button:first-child
+              border-radius: 5px 0 0 5px
+
+            button:last-child
+              border-radius: 0 5px 5px 0
+
+    div.detail-desc
+      >div
+        width: 50%
+        padding: 1%
+        object-fit: contain
+
+      div.detail-desc-img
+        img
+          width: 100%
+
+      div.detail-desc-desc
+        padding: 8% 5%
+        display: flex
+        align-content: center
+
+      span
+        font-family: $font-content
 
 footer
   font-family: $font-content

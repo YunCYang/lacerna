@@ -14,9 +14,11 @@ const Product = () => {
   });
   const [productList, setProductList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const selectRef = React.useRef(null);
 
   React.useEffect(
     () => {
+      if (selected.type !== 'product') selectRef.current = selected;
       setIsLoading(true);
       let isSubscribed = true;
       if (selected.type === 'type') {
@@ -62,7 +64,7 @@ const Product = () => {
     } else {
       if (selected.type === 'product') {
         if (productList.productName) {
-          return <ProductView product={productList} />;
+          return <ProductView product={productList} selected={selectRef.current} />;
         }
       } else {
         if (productList.length) {
