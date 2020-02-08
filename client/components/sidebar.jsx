@@ -63,7 +63,9 @@ const Sidebar = () => {
         </div>
       </div>
       <div>
-        <span>Account</span>
+        <Link to='/account'>
+          <span>Log In / Sign Up</span>
+        </Link>
       </div>
     </menu>
   );

@@ -33,7 +33,7 @@ header div.menu {
 header div.menu > div {
   margin: 0 30px;
 }
-header div.menu > div > i {
+header div.menu > div i {
   font-size: 25px;
   margin: 10px 15px;
   cursor: pointer;
@@ -96,7 +96,7 @@ menu {
   margin: 0;
   transition: 0.7s;
   padding: 20px;
-  z-index: 2;
+  z-index: 3;
   background-color: #fff;
 }
 menu > div:nth-child(2),
@@ -141,21 +141,27 @@ div.main div.product {
   display: flex;
   flex-wrap: wrap;
   padding: 1%;
+  position: relative;
 }
 div.main div.product div.container {
   width: 30%;
   display: flex;
   margin: 1%;
   flex-direction: column;
+  position: relative;
 }
 div.main div.product div.container div.image-container,
 div.main div.product div.container div.info-container {
   width: 100%;
   padding: 1%;
+  position: relative;
 }
 div.main div.product div.container div.info-container {
   display: flex;
   flex-direction: column;
+}
+div.main div.product div.container div.info-container div:first-child span {
+  font-family: "Playfair Display", serif;
 }
 div.main div.product div.container div.info-container div {
   display: flex;
@@ -167,10 +173,129 @@ div.main div.product div.container div.info-container div span {
   font-family: "EB Garamond", serif;
 }
 div.main div.product div.container img {
+  position: absolute;
   width: 100%;
+  transition: all 0.3s ease-in-out;
+  top: 5%;
+}
+div.main div.product div.container .hidden {
+  opacity: 0;
+}
+div.main div.product div.container .shown {
+  transform: scale(1.1);
 }
 div.main div.product div.container div.image-container {
   object-fit: contain;
+  width: 100%;
+  height: 33vw;
+  overflow: hidden;
+}
+div.main div.product-detail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+div.main div.product-detail > div {
+  display: flex;
+  width: 100%;
+  padding: 1%;
+}
+div.main div.product-detail div:first-child {
+  margin: 0 0 10px 30px;
+}
+div.main div.product-detail div:first-child span {
+  cursor: pointer;
+}
+div.main div.product-detail div.detail-info > div {
+  width: 50%;
+  padding: 1%;
+  object-fit: contain;
+}
+div.main div.product-detail div.detail-info > div > div:last-child {
+  min-height: 120px;
+}
+div.main div.product-detail div.detail-info div.detail-info-img img {
+  width: 100%;
+}
+div.main div.product-detail div.detail-info div.detail-info-info {
+  display: flex;
+  flex-direction: column;
+  padding: 5% 5%;
+  justify-content: space-evenly;
+}
+div.main div.product-detail div.detail-info div.detail-info-info > div {
+  font-family: "EB Garamond", serif;
+  margin: 1px 0;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-name {
+  font-family: "Playfair Display", serif;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form input[type=radio] {
+  opacity: 0;
+  width: 0;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form > div {
+  display: flex;
+  margin: 40px 0;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form label {
+  border: 1px solid #C5CCCE;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #C5CCCE;
+  cursor: pointer;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form input[type=radio]:checked + label {
+  border-color: #FFF;
+  background-color: #15323A;
+  color: #FFF;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form label:hover {
+  border-color: #FFF;
+  background-color: #8A999D;
+  color: #FFF;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form input[type=text] {
+  padding: 4px 10px;
+  width: 4em;
+  color: #15323A;
+  text-align: center;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form button {
+  border: 1px solid #8A999D;
+  padding: 5px 10px;
+  color: #8A999D;
+  border-radius: 5px;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form button:hover {
+  background-color: #50666C;
+  color: #FFF;
+  border-color: #50666C;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form div.quantity {
+  margin-right: 20px;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form div.quantity button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form div.quantity button:last-child {
+  border-radius: 0 5px 5px 0;
+}
+div.main div.product-detail div.detail-desc > div {
+  width: 50%;
+  padding: 1%;
+  object-fit: contain;
+}
+div.main div.product-detail div.detail-desc div.detail-desc-img img {
+  width: 100%;
+}
+div.main div.product-detail div.detail-desc div.detail-desc-desc {
+  padding: 8% 5%;
+  display: flex;
+  align-content: center;
+}
+div.main div.product-detail div.detail-desc span {
+  font-family: "EB Garamond", serif;
 }
 
 footer {
@@ -204,7 +329,7 @@ div.shadow {
   height: 100vh;
   background-color: #000;
   opacity: 0.5;
-  z-index: 1;
+  z-index: 2;
 }
 
 /*# sourceMappingURL=styles.css.map */
