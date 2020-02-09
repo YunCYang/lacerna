@@ -37,8 +37,13 @@ header
 
   div.menu>div i
     font-size: 25px
-    margin: 10px 15px
+    margin: 10px 5px 10px 25px
     cursor: pointer
+
+  span
+    font-size: 1.2em
+    position: relative
+    top: -3px
 
   input
     line-height: 25px
@@ -326,6 +331,17 @@ div.account
       padding: 5% 0
       font-family: $font-content
 
+    span.invalid
+      color: #ff1744
+      transition: all 0.5s ease
+
+      &.shown
+        height: 21px
+
+      &.hidden
+        height: 0
+        opacity: 0
+
   >div:nth-child(3)
     *
       margin: 10px
@@ -345,6 +361,7 @@ div.account
 
     span
       text-decoration: underline
+      cursor: pointer
 
 footer
   font-family: $font-content
@@ -377,3 +394,7 @@ div.shadow
   background-color: #000
   opacity: 0.5
   z-index: 2
+
+div.modal
+  &.hidden
+    display: none

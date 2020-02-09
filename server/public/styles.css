@@ -35,8 +35,13 @@ header div.menu > div {
 }
 header div.menu > div i {
   font-size: 25px;
-  margin: 10px 15px;
+  margin: 10px 5px 10px 25px;
   cursor: pointer;
+}
+header span {
+  font-size: 1.2em;
+  position: relative;
+  top: -3px;
 }
 header input {
   line-height: 25px;
@@ -321,6 +326,17 @@ div.account > div:nth-child(2) div {
   padding: 5% 0;
   font-family: "EB Garamond", serif;
 }
+div.account > div:nth-child(2) span.invalid {
+  color: #ff1744;
+  transition: all 0.5s ease;
+}
+div.account > div:nth-child(2) span.invalid.shown {
+  height: 21px;
+}
+div.account > div:nth-child(2) span.invalid.hidden {
+  height: 0;
+  opacity: 0;
+}
 div.account > div:nth-child(3) * {
   margin: 10px;
   font-family: "EB Garamond", serif;
@@ -339,6 +355,7 @@ div.account > div:nth-child(3) button:hover {
 }
 div.account > div:nth-child(3) span {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 footer {
@@ -373,6 +390,10 @@ div.shadow {
   background-color: #000;
   opacity: 0.5;
   z-index: 2;
+}
+
+div.modal.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -5,6 +5,7 @@ import { SHOW_SHADOW, SEARCH } from '../common/constants/action-types';
 
 const Header = props => {
   const menuOpen = useSelector(state => state.shadow.shadow);
+  const userId = useSelector(state => state.auth.auth);
   const [searchShown, setSearchShown] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -31,9 +32,10 @@ const Header = props => {
           <i className="fas fa-search" onClick={
             () => setSearchShown(!searchShown)
           }></i>
-          <i className="fas fa-user"></i>
+          <i className={userId ? 'fas fa-user' : 'fas fa-user-alt-slash'}></i>
           <Link to='/cart'>
             <i className="fas fa-shopping-cart"></i>
+            <span>(0)</span>
           </Link>
           <div className={`form ${searchShown ? 'shown' : 'hidden'}`}>
             <input type="text" placeholder='product name' onKeyPress={
@@ -60,10 +62,9 @@ const Header = props => {
           <div></div>
         </div>
       </div>
+      <div className='modal hidden'></div>
     </header>
   );
 };
 
 export default withRouter(Header);
-
-// <i class="fas fa-user-alt-slash"></i>
