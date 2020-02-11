@@ -49,8 +49,13 @@ const Modal = () => {
                 () => {
                   fetch('/api/auth/logout')
                     .then(res => {
-                      dispatch({ type: AUTH, payload: null });
-                      dispatch({ type: POP, payload: { type: null } });
+                      fetch(`/api/product/cart/${1}/nologin`)
+                        .then(res => res.json())
+                        .then(res => {
+                          dispatch({ type: STOCK, payload: res });
+                          dispatch({ type: AUTH, payload: null });
+                          dispatch({ type: POP, payload: { type: null } });
+                        });
                     });
                 }
               }>Log Out</button>
