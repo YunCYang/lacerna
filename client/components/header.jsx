@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SHOW_SHADOW, SEARCH } from '../common/constants/action-types';
+import { SHOW_SHADOW, SEARCH, POP } from '../common/constants/action-types';
 
 const Header = props => {
   const menuOpen = useSelector(state => state.shadow.shadow);
@@ -32,7 +32,19 @@ const Header = props => {
           <i className="fas fa-search" onClick={
             () => setSearchShown(!searchShown)
           }></i>
-          <i className={userId ? 'fas fa-user' : 'fas fa-user-alt-slash'}></i>
+          <i className={userId ? 'fas fa-user-alt-slash' : 'fas fa-user'} onClick={
+            () => {
+              if (!userId) props.history.push('/account');
+              else {
+                dispatch({
+                  type: POP,
+                  payload: {
+                    type: 'account'
+                  }
+                });
+              }
+            }
+          }></i>
           <Link to='/cart'>
             <i className="fas fa-shopping-cart"></i>
             <span>(0)</span>
@@ -62,7 +74,6 @@ const Header = props => {
           <div></div>
         </div>
       </div>
-      <div className='modal hidden'></div>
     </header>
   );
 };

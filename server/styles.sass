@@ -81,7 +81,7 @@ header
   .nav-icon
     padding: 10px 0
     width: 20px
-    z-index: 3
+    z-index: 4
     cursor: pointer
 
     &.open:before
@@ -395,6 +395,52 @@ div.shadow
   opacity: 0.5
   z-index: 2
 
-div.modal
-  &.hidden
-    display: none
+div.modal-shadow
+  position: fixed
+  height: 100vh
+  width: 100vw
+  top: 0
+  background-color: rgba(0, 0, 0, 0.5)
+  z-index: 4
+  display: flex
+  justify-content: center
+  align-items: center
+
+  div.modal
+    background-color: #FFF
+    opacity: 1
+    color: #000
+    width: 60%
+    padding: 1em
+    display: flex
+    flex-direction: column
+
+    div
+      margin-bottom: 1em
+      display: flex
+      flex-direction: column
+
+      &.content
+        align-items: center
+
+        h4
+          font-family: $font-display
+
+        span
+          font-family: $font-content
+
+      &.button
+        flex-direction: row
+        justify-content: space-evenly
+
+        button
+          border: 1px solid #8A999D
+          padding: 5px 10px
+          color: #8A999D
+          border-radius: 5px
+          cursor: pointer
+
+        button:hover
+          background-color: #50666C
+          color: #FFF
+          border-color: #50666C

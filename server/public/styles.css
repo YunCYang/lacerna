@@ -79,7 +79,7 @@ header .nav-icon div {
 header .nav-icon {
   padding: 10px 0;
   width: 20px;
-  z-index: 3;
+  z-index: 4;
   cursor: pointer;
 }
 header .nav-icon.open:before {
@@ -392,8 +392,55 @@ div.shadow {
   z-index: 2;
 }
 
-div.modal.hidden {
-  display: none;
+div.modal-shadow {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div.modal-shadow div.modal {
+  background-color: #FFF;
+  opacity: 1;
+  color: #000;
+  width: 60%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+div.modal-shadow div.modal div {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+}
+div.modal-shadow div.modal div.content {
+  align-items: center;
+}
+div.modal-shadow div.modal div.content h4 {
+  font-family: "Playfair Display", serif;
+}
+div.modal-shadow div.modal div.content span {
+  font-family: "EB Garamond", serif;
+}
+div.modal-shadow div.modal div.button {
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+div.modal-shadow div.modal div.button button {
+  border: 1px solid #8A999D;
+  padding: 5px 10px;
+  color: #8A999D;
+  border-radius: 5px;
+  cursor: pointer;
+}
+div.modal-shadow div.modal div.button button:hover {
+  background-color: #50666C;
+  color: #FFF;
+  border-color: #50666C;
 }
 
 /*# sourceMappingURL=styles.css.map */

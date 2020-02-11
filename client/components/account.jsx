@@ -1,11 +1,16 @@
 import React from 'react';
 import NewAccount from './newAccount';
 import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { AUTH } from '../common/constants/action-types';
 
-const Account = () => {
+const Account = props => {
   const [createAccount, setCreateAccount] = React.useState(false);
   const [isInvalid, setIsInvalid] = React.useState('');
+  const [accountMatch, setAccountMatch] = React.useState({
+    type: null,
+    isMatch: true
+  });
   const dispatch = useDispatch();
 
   if (!createAccount) {
@@ -21,12 +26,20 @@ const Account = () => {
             <span className={`invalid ${isInvalid === 'email' || isInvalid === 'all' ? 'shown' : 'hidden'}`}>
               Email is invalid
             </span>
+            <span className={`invalid ${!accountMatch.isMatch &&
+              accountMatch.type === 'email' ? 'shown' : 'hidden'}`}>
+              Email does not Match
+            </span>
           </div>
           <div>
             <label htmlFor="password">Password</label>
             <input type="password" name="login" id="password" required />
             <span className={`invalid ${isInvalid === 'password' || isInvalid === 'all' ? 'shown' : 'hidden'}`}>
               Password is required to log in
+            </span>
+            <span className={`invalid ${!accountMatch.isMatch &&
+              accountMatch.type === 'password' ? 'shown' : 'hidden'}`}>
+              Password does not match
             </span>
           </div>
         </div>
@@ -48,10 +61,32 @@ const Account = () => {
                 fetch('/api/auth/login', init)
                   .then(res => res.json())
                   .then(res => {
-                    dispatch({
-                      type: AUTH,
-                      payload: res
-                    });
+                    setIsInvalid('');
+                    if (res.error) {
+                      if (res.error[0] === 'e' && res.error[1] === 'm' &&
+                        res.error[2] === 'a' && res.error[3] === 'i' &&
+                        res.error[4] === 'l') {
+                        setAccountMatch({
+                          type: 'email',
+                          isMatch: false
+                        });
+                      }
+                    } else if (typeof res === 'object') {
+                      setAccountMatch({
+                        type: 'password',
+                        isMatch: false
+                      });
+                    } else {
+                      setAccountMatch({
+                        type: null,
+                        isMatch: true
+                      });
+                      dispatch({
+                        type: AUTH,
+                        payload: res
+                      });
+                      props.history.push('/');
+                    }
                   });
               } else {
                 if (!document.querySelector('#email').checkValidity() &&
@@ -74,4 +109,4 @@ const Account = () => {
   }
 };
 
-export default Account;
+export default withRouter(Account);

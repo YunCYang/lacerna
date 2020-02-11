@@ -9,6 +9,7 @@ import Account from './account';
 import Cart from './cart';
 import Footer from './footer';
 import Shadow from './shadow';
+import Modal from './modal';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           </div>
           <Footer />
           <Shadow />
+          <Modal />
         </>
       </Switch>
     </Router>
