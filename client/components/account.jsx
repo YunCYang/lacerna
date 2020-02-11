@@ -2,7 +2,7 @@ import React from 'react';
 import NewAccount from './newAccount';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { AUTH } from '../common/constants/action-types';
+import { AUTH, STOCK } from '../common/constants/action-types';
 
 const Account = props => {
   const [createAccount, setCreateAccount] = React.useState(false);
@@ -77,15 +77,35 @@ const Account = props => {
                         isMatch: false
                       });
                     } else {
-                      setAccountMatch({
-                        type: null,
-                        isMatch: true
-                      });
-                      dispatch({
-                        type: AUTH,
-                        payload: res
-                      });
-                      props.history.push('/');
+                      const init = {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          userId: res
+                        })
+                      };
+                      fetch('/api/cart/userType', init)
+                        .then(result => {
+                          fetch(`/api/product/cart/${res}/login`)
+                            .then(res => res.json())
+                            .then(productResult => {
+                              dispatch({
+                                type: STOCK,
+                                payload: productResult
+                              });
+                              setAccountMatch({
+                                type: null,
+                                isMatch: true
+                              });
+                              dispatch({
+                                type: AUTH,
+                                payload: res
+                              });
+                              props.history.push('/');
+                            });
+                        });
                     }
                   });
               } else {

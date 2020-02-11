@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { POP, AUTH } from '../common/constants/action-types';
+import { POP, AUTH, STOCK } from '../common/constants/action-types';
 
 const Modal = () => {
   const modalStatus = useSelector(state => {
@@ -10,6 +10,7 @@ const Modal = () => {
       };
     } else return null;
   });
+  const userId = useSelector(state => state.auth.auth);
   const dispatch = useDispatch();
 
   if (modalStatus) {
@@ -23,7 +24,14 @@ const Modal = () => {
             </div>
             <div className='button'>
               <button onClick={
-                () => dispatch({ type: POP, payload: { type: null } })
+                () => {
+                  fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
+                    .then(res => res.json())
+                    .then(res => {
+                      dispatch({ type: STOCK, payload: res });
+                      dispatch({ type: POP, payload: { type: null } });
+                    });
+                }
               }>Confirm</button>
             </div>
           </div>
@@ -39,8 +47,16 @@ const Modal = () => {
             <div className='button'>
               <button onClick={
                 () => {
-                  dispatch({ type: AUTH, payload: null });
-                  dispatch({ type: POP, payload: { type: null } });
+                  fetch('/api/auth/logout')
+                    .then(res => {
+                      fetch(`/api/product/cart/${1}/nologin`)
+                        .then(res => res.json())
+                        .then(res => {
+                          dispatch({ type: STOCK, payload: res });
+                          dispatch({ type: AUTH, payload: null });
+                          dispatch({ type: POP, payload: { type: null } });
+                        });
+                    });
                 }
               }>Log Out</button>
               <button onClick={

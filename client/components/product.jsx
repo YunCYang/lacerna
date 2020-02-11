@@ -69,7 +69,7 @@ const Product = () => {
       } else {
         if (productList.length) {
           return productList.map((item, index) => <ProductCard product={item} key={`item${index}`} />);
-        } else return null;
+        } else return <h3>The product you searched for does not exist</h3>;
       }
     }
   };
