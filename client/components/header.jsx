@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SHOW_SHADOW, SEARCH } from '../common/constants/action-types';
+import { SHOW_SHADOW, SEARCH, POP } from '../common/constants/action-types';
 
 const Header = props => {
   const menuOpen = useSelector(state => state.shadow.shadow);
+  const userId = useSelector(state => state.auth.auth);
   const [searchShown, setSearchShown] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -31,9 +32,22 @@ const Header = props => {
           <i className="fas fa-search" onClick={
             () => setSearchShown(!searchShown)
           }></i>
-          <i className="fas fa-user"></i>
+          <i className={userId ? 'fas fa-user-alt-slash' : 'fas fa-user'} onClick={
+            () => {
+              if (!userId) props.history.push('/account');
+              else {
+                dispatch({
+                  type: POP,
+                  payload: {
+                    type: 'account'
+                  }
+                });
+              }
+            }
+          }></i>
           <Link to='/cart'>
             <i className="fas fa-shopping-cart"></i>
+            <span>(0)</span>
           </Link>
           <div className={`form ${searchShown ? 'shown' : 'hidden'}`}>
             <input type="text" placeholder='product name' onKeyPress={
@@ -65,5 +79,3 @@ const Header = props => {
 };
 
 export default withRouter(Header);
-
-// <i class="fas fa-user-alt-slash"></i>

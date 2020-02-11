@@ -77,7 +77,7 @@ app.post('/api/auth/signup', (req, res, next) => {
   }
   const emailTest = /^[\w.=-]+@[\w.-]+\.[\w]{2,4}$/;
   if (!emailTest.exec(req.body.email)) next(new ClientError(`email ${req.body.email} is not valid`, 400));
-  const pwdTest = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+  const pwdTest = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-])(?=.{8,})/;
   if (!pwdTest.exec(req.body.password)) next(new ClientError(`password ${req.body.password} is not valid`, 400));
   const checkEmailSql = `
     select "email"
@@ -93,7 +93,7 @@ app.post('/api/auth/signup', (req, res, next) => {
   let userType = null;
   if (req.body.userType === 'true') userType = true;
   else userType = false;
-  if (emailTest.exec(req.body.email) && pwdTest(req.body.password)) {
+  if (emailTest.exec(req.body.email) && pwdTest.exec(req.body.password)) {
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
       if (err) next(err);
       const insertValue = [req.body.firstName, req.body.lastName, req.body.email, hash, userType];
