@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH } from '../common/constants/action-types';
+import { SEARCH, STOCK } from '../common/constants/action-types';
 
 const ProductView = props => {
   const [quantity, setQuantity] = React.useState('1');
@@ -131,10 +131,21 @@ const ProductView = props => {
                     for (let i = 0; i < quantity; i++) request.push('/api/cart/product');
                     Promise.all(
                       request.map(item => {
-                        fetch(item, init)
+                        return fetch(item, init)
                           .then(res => res.json())
                           .then(res => false);
                       })
+                    ).then(
+                      () => {
+                        fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
+                          .then(res => res.json())
+                          .then(res => {
+                            dispatch({
+                              type: STOCK,
+                              payload: res
+                            });
+                          });
+                      }
                     );
                   }
                 }>Add to Cart</button>
