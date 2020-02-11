@@ -77,15 +77,27 @@ const Account = props => {
                         isMatch: false
                       });
                     } else {
-                      setAccountMatch({
-                        type: null,
-                        isMatch: true
-                      });
-                      dispatch({
-                        type: AUTH,
-                        payload: res
-                      });
-                      props.history.push('/');
+                      const init = {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          userId: res
+                        })
+                      };
+                      fetch('/api/cart/userType', init)
+                        .then(result => {
+                          setAccountMatch({
+                            type: null,
+                            isMatch: true
+                          });
+                          dispatch({
+                            type: AUTH,
+                            payload: res
+                          });
+                          props.history.push('/');
+                        });
                     }
                   });
               } else {

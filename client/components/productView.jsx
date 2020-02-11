@@ -127,9 +127,15 @@ const ProductView = props => {
                         })
                       };
                     }
-                    fetch('/api/cart/product', init)
-                      .then(res => res.json())
-                      .then(res => false);
+                    const request = [];
+                    for (let i = 0; i < quantity; i++) request.push('/api/cart/product');
+                    Promise.all(
+                      request.map(item => {
+                        fetch(item, init)
+                          .then(res => res.json())
+                          .then(res => false);
+                      })
+                    );
                   }
                 }>Add to Cart</button>
               </div>
