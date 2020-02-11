@@ -271,6 +271,7 @@ div.main div.product-detail div.detail-info div.detail-info-info div.detail-info
   padding: 5px 10px;
   color: #8A999D;
   border-radius: 5px;
+  cursor: pointer;
 }
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form button:hover {
   background-color: #50666C;

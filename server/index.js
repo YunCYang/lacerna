@@ -34,12 +34,9 @@ app.get('/api/user/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 // logout
-app.post('/api/auth/logout', (req, res, next) => {
-  if (!req.session.cartId) next(new ClientError('session does not exist', 404));
-  else {
-    req.session.cartId = null;
-    res.status(204).json([]);
-  }
+app.get('/api/auth/logout', (req, res, next) => {
+  req.session.cartId = null;
+  res.status(204).json([]);
 });
 // login
 app.post('/api/auth/login', (req, res, next) => {
@@ -392,7 +389,7 @@ app.post('/api/cart/product', (req, res, next) => {
   if (!req.body.login) next(new ClientError('missing login status', 400));
   else if (!req.body.productId) next(new ClientError('missing product id', 400));
   else if (!req.body.size) next(new ClientError('missing size', 400));
-  else if (!req.body.userId) next(new ClientError('missing user id', 400));
+  // else if (!req.body.userId) next(new ClientError('missing user id', 400));
   if (req.body.userId) intTest(req.body.userId, next);
   if (req.body.productId) intTest(req.body.productId, next);
   const getUserSql = `
@@ -410,7 +407,12 @@ app.post('/api/cart/product', (req, res, next) => {
       from "product"
      where "productId" = $1;
   `;
-  const postUserSql = `
+  const postUserCartSql = `
+    insert into "cart" ("userId", "login")
+    values ($1, $2)
+    returning *;
+  `;
+  const postUserProductSql = `
     insert into "cartProduct" ("cartId", "productId", "size")
     values ((
       select "cartId"
@@ -441,6 +443,7 @@ app.post('/api/cart/product', (req, res, next) => {
   const userValue = [parseInt(req.body.userId)];
   const productValue = [parseInt(req.body.productId)];
   const postValue = [parseInt(req.body.userId), parseInt(req.body.productId), req.body.size];
+  const userCartValue = [parseInt(req.body.userId), true];
   const sessionValue = [0, false];
   db.query(checkProductSql, productValue)
     .then(productResult => {
@@ -449,9 +452,16 @@ app.post('/api/cart/product', (req, res, next) => {
         if (req.body.login === 'login') {
           db.query(getUserSql, userValue)
             .then(getResult => {
-              if (!getResult.rows[0]) next(new ClientError(`cart from user id ${req.body.userId} does not exist`, 404));
-              else {
-                db.query(postUserSql, postValue)
+              if (!getResult.rows[0]) {
+                db.query(postUserCartSql, userCartValue)
+                  .then(postUserCartResult => {
+                    db.query(postUserProductSql, postValue)
+                      .then(postResult => res.status(201).json(postResult.rows[0]))
+                      .catch(err => next(err));
+                  })
+                  .catch(err => next(err));
+              } else {
+                db.query(postUserProductSql, postValue)
                   .then(postResult => res.status(201).json(postResult.rows[0]))
                   .catch(err => next(err));
               }
@@ -461,7 +471,7 @@ app.post('/api/cart/product', (req, res, next) => {
           if (!req.session.cartId) {
             db.query(postSessionCartSql, sessionValue)
               .then(sessionCartResult => {
-                req.session.cartId = sessionCartResult.rows[0];
+                req.session.cartId = sessionCartResult.rows[0].cartId;
                 const sessionProductValue = [req.session.cartId, parseInt(req.body.productId), req.body.size];
                 db.query(postSessionProductSql, sessionProductValue)
                   .then(postResult => res.status(201).json(postResult.rows[0]))

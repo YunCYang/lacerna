@@ -1,9 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH } from '../common/constants/action-types';
 
 const ProductView = props => {
   const [quantity, setQuantity] = React.useState('1');
+  const [size, setSize] = React.useState('M');
+  const userId = useSelector(state => state.auth.auth);
   const dispatch = useDispatch();
 
   return (
@@ -39,23 +41,33 @@ const ProductView = props => {
           <div className='detail-info-form'>
             <div>
               <div>
-                <input type="radio" name="size" id="XS" />
+                <input type="radio" name="size" id="XS" onClick={
+                  e => setSize(e.target.id)
+                } />
                 <label htmlFor="XS">XS</label>
               </div>
               <div>
-                <input type="radio" name="size" id="S" />
+                <input type="radio" name="size" id="S" onClick={
+                  e => setSize(e.target.id)
+                } />
                 <label htmlFor="S">S</label>
               </div>
               <div>
-                <input type="radio" name="size" id="M" />
+                <input type="radio" name="size" id="M" defaultChecked onClick={
+                  e => setSize(e.target.id)
+                } />
                 <label htmlFor="M">M</label>
               </div>
               <div>
-                <input type="radio" name="size" id="L" />
+                <input type="radio" name="size" id="L" onClick={
+                  e => setSize(e.target.id)
+                } />
                 <label htmlFor="L">L</label>
               </div>
               <div>
-                <input type="radio" name="size" id="XL" />
+                <input type="radio" name="size" id="XL" onClick={
+                  e => setSize(e.target.id)
+                } />
                 <label htmlFor="XL">XL</label>
               </div>
             </div>
@@ -86,7 +98,40 @@ const ProductView = props => {
                 }>+</button>
               </div>
               <div className='submit'>
-                <button type='button'>Add to Cart</button>
+                <button type='button' onClick={
+                  () => {
+                    let init = {};
+                    if (userId) {
+                      init = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          login: 'login',
+                          productId: props.product.productId,
+                          size: size,
+                          userId: userId
+                        })
+                      };
+                    } else {
+                      init = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          login: 'nologin',
+                          productId: props.product.productId,
+                          size: size
+                        })
+                      };
+                    }
+                    fetch('/api/cart/product', init)
+                      .then(res => res.json())
+                      .then(res => false);
+                  }
+                }>Add to Cart</button>
               </div>
             </div>
           </div>

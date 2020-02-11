@@ -39,8 +39,11 @@ const Modal = () => {
             <div className='button'>
               <button onClick={
                 () => {
-                  dispatch({ type: AUTH, payload: null });
-                  dispatch({ type: POP, payload: { type: null } });
+                  fetch('/api/auth/logout')
+                    .then(res => {
+                      dispatch({ type: AUTH, payload: null });
+                      dispatch({ type: POP, payload: { type: null } });
+                    });
                 }
               }>Log Out</button>
               <button onClick={
