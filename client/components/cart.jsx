@@ -1,10 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartItem from './cartItem';
+import { SEARCH } from '../common/constants/action-types';
+import { withRouter } from 'react-router-dom';
 
 const Cart = props => {
   const productArray = useSelector(state => state.product.product);
   const [productSortedArray, setProductSortedArray] = React.useState([]);
+  const selected = useSelector(state => {
+    if (state.search) {
+      return {
+        type: state.search.search.type,
+        value: state.search.search.value
+      };
+    } else return null;
+  });
+  const dispatch = useDispatch();
 
   React.useEffect(
     () => {
@@ -64,11 +75,24 @@ const Cart = props => {
         </div>
       </div>
       <div className='button'>
-        <button type='button'>Proceed to Checkout</button>
-        <button type='button'>Continue Shopping</button>
+        <button type='button' onClick={
+          () => null
+        }>Proceed to Checkout</button>
+        <button type='button' onClick={
+          () => {
+            props.history.push('/product');
+            dispatch({
+              type: SEARCH,
+              payload: {
+                type: selected.type,
+                value: selected.value
+              }
+            });
+          }
+        }>Continue Shopping</button>
       </div>
     </div>
   );
 };
 
-export default Cart;
+export default withRouter(Cart);

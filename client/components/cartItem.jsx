@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH, STOCK } from '../common/constants/action-types';
 
 const CartItem = props => {
+  const productArray = useSelector(state => state.product.product);
   const userId = useSelector(state => state.auth.auth);
   const [quantity, setQuantity] = React.useState(1);
   const dispatch = useDispatch();
@@ -57,8 +58,139 @@ const CartItem = props => {
               }/>
             </div>
             <div className='qt-button'>
-              <button type='button'>+</button>
-              <button type='button'>-</button>
+              <button type='button' onClick={
+                () => {
+                  let init = {};
+                  if (userId) {
+                    init = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        userId: userId,
+                        login: 'login',
+                        productId: props.item.detail.productId,
+                        size: props.item.detail.size
+                      })
+                    };
+                  } else {
+                    init = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        login: 'nologin',
+                        productId: props.item.detail.productId,
+                        size: props.item.detail.size
+                      })
+                    };
+                  }
+                  fetch('/api/cart/product', init)
+                    .then(res => res.json())
+                    .then(res => {
+                      const paCopy = [...productArray];
+                      paCopy.push({ ...props.item.detail });
+                      dispatch({
+                        type: STOCK,
+                        payload: paCopy
+                      });
+                      setQuantity(quantity + 1);
+                    });
+                }
+              }>+</button>
+              <button type='button' onClick={
+                () => {
+                  let init = {};
+                  if (quantity === 1) {
+                    if (userId) {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          userId: userId,
+                          productId: props.item.detail.productId,
+                          login: 'login',
+                          size: props.item.detail.size
+                        })
+                      };
+                    } else {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          productId: props.item.detail.productId,
+                          login: 'nologin',
+                          size: props.item.detail.size
+                        })
+                      };
+                    }
+                    fetch('/api/cart/productType', init)
+                      .then(res => {
+                        const paCopy = [...productArray];
+                        for (let i = 0; i < paCopy.length; i++) {
+                          if (paCopy[i].productId === props.item.detail.productId &&
+                            paCopy[i].size === props.item.detail.size) {
+                            paCopy.splice(i, 1);
+                            i--;
+                          }
+                        }
+                        dispatch({
+                          type: STOCK,
+                          payload: paCopy
+                        });
+                      });
+                  } else {
+                    if (userId) {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          userId: userId,
+                          login: 'login',
+                          productId: props.item.detail.productId,
+                          size: props.item.detail.size
+                        })
+                      };
+                    } else {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          login: 'nologin',
+                          productId: props.item.detail.productId,
+                          size: props.item.detail.size
+                        })
+                      };
+                    }
+                    fetch('/api/cart/product', init)
+                      .then(res => {
+                        const paCopy = [...productArray];
+                        for (let i = 0; i < paCopy.length; i++) {
+                          if (paCopy[i].productId === props.item.detail.productId &&
+                            paCopy[i].size === props.item.detail.size) {
+                            paCopy.splice(i, 1);
+                            break;
+                          }
+                        }
+                        dispatch({
+                          type: STOCK,
+                          payload: paCopy
+                        });
+                        setQuantity(quantity - 1);
+                      });
+                  }
+                }
+              }>-</button>
             </div>
           </div>
         </div>
@@ -94,7 +226,7 @@ const CartItem = props => {
               }
               fetch('/api/cart/productType', init)
                 .then(res => {
-                  const paCopy = [...props.productArray];
+                  const paCopy = [...productArray];
                   for (let i = 0; i < paCopy.length; i++) {
                     if (paCopy[i].productId === props.item.detail.productId &&
                       paCopy[i].size === props.item.detail.size) {
