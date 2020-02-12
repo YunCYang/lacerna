@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH, STOCK } from '../common/constants/action-types';
+import { SEARCH, STOCK, POP, SELECT_PRODUCT } from '../common/constants/action-types';
 
 const ProductView = props => {
   const [quantity, setQuantity] = React.useState('1');
@@ -140,10 +140,9 @@ const ProductView = props => {
                         fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
                           .then(res => res.json())
                           .then(res => {
-                            dispatch({
-                              type: STOCK,
-                              payload: res
-                            });
+                            dispatch({ type: STOCK, payload: res });
+                            dispatch({ type: SELECT_PRODUCT, payload: props.product });
+                            dispatch({ type: POP, payload: { type: 'addToCart' } });
                           });
                       }
                     );

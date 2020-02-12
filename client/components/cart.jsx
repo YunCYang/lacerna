@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 const Cart = props => {
   const productArray = useSelector(state => state.product.product);
   const [productSortedArray, setProductSortedArray] = React.useState([]);
+  // console.log('cart', productSortedArray);
   const selected = useSelector(state => {
     if (state.search) {
       return {
@@ -47,7 +48,8 @@ const Cart = props => {
 
   const createProductList = () => {
     if (productArray) {
-      return productSortedArray.map((item, index) => {
+      // console.log(productArray.sort());
+      return productSortedArray.sort().map((item, index) => {
         return <CartItem key={`cart ${index}`} item={item} productArray={productArray} />;
       });
     }

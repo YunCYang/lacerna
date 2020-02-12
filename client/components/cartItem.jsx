@@ -1,10 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH, STOCK } from '../common/constants/action-types';
+import { SEARCH, STOCK, POP, SELECT_PRODUCT } from '../common/constants/action-types';
 
 const CartItem = props => {
-  const productArray = useSelector(state => state.product.product);
+  // const productArray = useSelector(state => state.product.product);
+  const productArray = props.productArray;
   const userId = useSelector(state => state.auth.auth);
   const [quantity, setQuantity] = React.useState(1);
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const CartItem = props => {
       setQuantity(props.item.quantity);
     }, []
   );
+
+  // console.log('quantity', quantity);
 
   return (
     <div className='cart-item'>
@@ -103,12 +106,7 @@ const CartItem = props => {
                           .then(res => false);
                       })
                     ).then(
-                      () => {
-                        dispatch({
-                          type: STOCK,
-                          payload: paCopy
-                        });
-                      }
+                      () => dispatch({ type: STOCK, payload: paCopy })
                     );
                   } else if (quantity < props.item.quantity) {
                     if (userId) {
@@ -155,12 +153,7 @@ const CartItem = props => {
                           .then(res => false);
                       })
                     ).then(
-                      () => {
-                        dispatch({
-                          type: STOCK,
-                          payload: paCopy
-                        });
-                      }
+                      () => dispatch({ type: STOCK, payload: paCopy })
                     );
                   }
                 }
@@ -201,60 +194,20 @@ const CartItem = props => {
                     .then(res => {
                       const paCopy = [...productArray];
                       paCopy.push({ ...props.item.detail });
-                      dispatch({
-                        type: STOCK,
-                        payload: paCopy
-                      });
+                      dispatch({ type: STOCK, payload: paCopy });
                       setQuantity(quantity + 1);
                     });
                 }
               }>+</button>
               <button type='button' onClick={
                 () => {
-                  let init = {};
+
                   if (quantity === 1) {
-                    if (userId) {
-                      init = {
-                        method: 'DELETE',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                          userId: userId,
-                          productId: props.item.detail.productId,
-                          login: 'login',
-                          size: props.item.detail.size
-                        })
-                      };
-                    } else {
-                      init = {
-                        method: 'DELETE',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                          productId: props.item.detail.productId,
-                          login: 'nologin',
-                          size: props.item.detail.size
-                        })
-                      };
-                    }
-                    fetch('/api/cart/productType', init)
-                      .then(res => {
-                        const paCopy = [...productArray];
-                        for (let i = 0; i < paCopy.length; i++) {
-                          if (paCopy[i].productId === props.item.detail.productId &&
-                            paCopy[i].size === props.item.detail.size) {
-                            paCopy.splice(i, 1);
-                            i--;
-                          }
-                        }
-                        dispatch({
-                          type: STOCK,
-                          payload: paCopy
-                        });
-                      });
+                    dispatch({ type: SELECT_PRODUCT, payload: props.item.detail });
+                    dispatch({ type: POP, payload: { type: 'deleteProduct' } });
+                    setQuantity(quantity);
                   } else {
+                    let init = {};
                     if (userId) {
                       init = {
                         method: 'DELETE',
@@ -284,17 +237,14 @@ const CartItem = props => {
                     fetch('/api/cart/product', init)
                       .then(res => {
                         const paCopy = [...productArray];
-                        for (let i = 0; i < paCopy.length; i++) {
+                        for (let i = paCopy.length - 1; i >= 0; i--) {
                           if (paCopy[i].productId === props.item.detail.productId &&
                             paCopy[i].size === props.item.detail.size) {
                             paCopy.splice(i, 1);
                             break;
                           }
                         }
-                        dispatch({
-                          type: STOCK,
-                          payload: paCopy
-                        });
+                        dispatch({ type: STOCK, payload: paCopy });
                         setQuantity(quantity - 1);
                       });
                   }
@@ -306,48 +256,9 @@ const CartItem = props => {
         <div className='remove'>
           <span onClick={
             () => {
-              let init = {};
-              if (userId) {
-                init = {
-                  method: 'DELETE',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                    userId: userId,
-                    productId: props.item.detail.productId,
-                    login: 'login',
-                    size: props.item.detail.size
-                  })
-                };
-              } else {
-                init = {
-                  method: 'DELETE',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                    productId: props.item.detail.productId,
-                    login: 'nologin',
-                    size: props.item.detail.size
-                  })
-                };
-              }
-              fetch('/api/cart/productType', init)
-                .then(res => {
-                  const paCopy = [...productArray];
-                  for (let i = 0; i < paCopy.length; i++) {
-                    if (paCopy[i].productId === props.item.detail.productId &&
-                      paCopy[i].size === props.item.detail.size) {
-                      paCopy.splice(i, 1);
-                      i--;
-                    }
-                  }
-                  dispatch({
-                    type: STOCK,
-                    payload: paCopy
-                  });
-                });
+              dispatch({ type: SELECT_PRODUCT, payload: props.item.detail });
+              dispatch({ type: POP, payload: { type: 'deleteProduct' } });
+              // setQuantity(props.item.quantity);
             }
           }>remove</span>
         </div>
