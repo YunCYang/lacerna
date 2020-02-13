@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH, STOCK, POP, SELECT_PRODUCT } from '../common/constants/action-types';
 
 const CartItem = props => {
-  // const productArray = useSelector(state => state.product.product);
-  const productArray = props.productArray;
+  const productArray = useSelector(state => state.product.product);
   const userId = useSelector(state => state.auth.auth);
   const [quantity, setQuantity] = React.useState(1);
+  const [disabled, setDisabled] = React.useState(false);
   const dispatch = useDispatch();
 
   React.useEffect(
@@ -16,7 +16,11 @@ const CartItem = props => {
     }, []
   );
 
-  // console.log('quantity', quantity);
+  React.useEffect(
+    () => {
+      setQuantity(props.item.quantity);
+    }, [quantity === props.item.quantity]
+  );
 
   return (
     <div className='cart-item'>
@@ -162,6 +166,7 @@ const CartItem = props => {
             <div className='qt-button'>
               <button type='button' onClick={
                 () => {
+                  setDisabled(true);
                   let init = {};
                   if (userId) {
                     init = {
@@ -196,16 +201,16 @@ const CartItem = props => {
                       paCopy.push({ ...props.item.detail });
                       dispatch({ type: STOCK, payload: paCopy });
                       setQuantity(quantity + 1);
+                      setDisabled(false);
                     });
                 }
-              }>+</button>
+              } disabled={disabled}>+</button>
               <button type='button' onClick={
                 () => {
-
+                  setDisabled(true);
                   if (quantity === 1) {
                     dispatch({ type: SELECT_PRODUCT, payload: props.item.detail });
-                    dispatch({ type: POP, payload: { type: 'deleteProduct' } });
-                    setQuantity(quantity);
+                    dispatch({ type: POP, payload: { type: 'deleteProduct', fn: 'delOne' } });
                   } else {
                     let init = {};
                     if (userId) {
@@ -246,10 +251,11 @@ const CartItem = props => {
                         }
                         dispatch({ type: STOCK, payload: paCopy });
                         setQuantity(quantity - 1);
+                        setDisabled(false);
                       });
                   }
                 }
-              }>-</button>
+              } disabled={disabled}>-</button>
             </div>
           </div>
         </div>
@@ -257,8 +263,8 @@ const CartItem = props => {
           <span onClick={
             () => {
               dispatch({ type: SELECT_PRODUCT, payload: props.item.detail });
-              dispatch({ type: POP, payload: { type: 'deleteProduct' } });
-              // setQuantity(props.item.quantity);
+              dispatch({ type: POP, payload: { type: 'deleteProduct', fn: 'delAll' } });
+              // setQuantity(quantity);
             }
           }>remove</span>
         </div>

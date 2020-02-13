@@ -11,6 +11,11 @@ const Modal = props => {
       };
     } else return null;
   });
+  const delFn = useSelector(state => {
+    if (state.modal.modal) {
+      return state.modal.modal.fn;
+    } else return null;
+  });
   const userId = useSelector(state => state.auth.auth);
   const selectedProduct = useSelector(state => state.select.select);
   const productArray = useSelector(state => state.product.product);
@@ -71,10 +76,19 @@ const Modal = props => {
       );
     } else if (modalStatus.type === 'checkOut') {
       return (
-        <div className={`modal ${modalStatus.isOpen ? 'shown' : 'hidden'}`}>
+        <div className={`modal-shadow ${modalStatus.isOpen ? 'shown' : 'hidden'}`}>
           <div className='modal'>
-            <div className='content'></div>
-            <div className='button'></div>
+            <div className='content'>
+              <h4>Your order is completed!</h4>
+            </div>
+            <div className='button'>
+              <button onClick={
+                () => {
+                  props.history.push('/');
+                  dispatch({ type: POP, payload: { type: null } });
+                }
+              }>Return</button>
+            </div>
           </div>
         </div>
       );
@@ -113,45 +127,86 @@ const Modal = props => {
               <button onClick={
                 () => {
                   let init = {};
-                  if (userId) {
-                    init = {
-                      method: 'DELETE',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                        userId: userId,
-                        productId: selectedProduct.productId,
-                        login: 'login',
-                        size: selectedProduct.size
-                      })
-                    };
-                  } else {
-                    init = {
-                      method: 'DELETE',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                        productId: selectedProduct.productId,
-                        login: 'nologin',
-                        size: selectedProduct.size
-                      })
-                    };
-                  }
-                  fetch('/api/cart/productType', init)
-                    .then(res => {
-                      const paCopy = [...productArray];
-                      for (let i = paCopy.length - 1; i >= 0; i--) {
-                        if (paCopy[i].productId === selectedProduct.productId &&
-                          paCopy[i].size === selectedProduct.size) {
-                          paCopy.splice(i, 1);
-                          i--;
+                  if (delFn === 'delOne') {
+                    if (userId) {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          userId: userId,
+                          productId: selectedProduct.productId,
+                          login: 'login',
+                          size: selectedProduct.size
+                        })
+                      };
+                    } else {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          productId: selectedProduct.productId,
+                          login: 'nologin',
+                          size: selectedProduct.size
+                        })
+                      };
+                    }
+                    fetch('/api/cart/product', init)
+                      .then(res => {
+                        const paCopy = [...productArray];
+                        for (let i = paCopy.length - 1; i >= 0; i--) {
+                          if (paCopy[i].productId === selectedProduct.productId &&
+                            paCopy[i].size === selectedProduct.size) {
+                            paCopy.splice(i, 1);
+                            break;
+                          }
                         }
-                      }
-                      dispatch({ type: STOCK, payload: paCopy });
-                      dispatch({ type: POP, payload: { type: null } });
-                    });
+                        dispatch({ type: STOCK, payload: paCopy });
+                        dispatch({ type: POP, payload: { type: null } });
+                      });
+                  } else if (delFn === 'delAll') {
+                    if (userId) {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          userId: userId,
+                          productId: selectedProduct.productId,
+                          login: 'login',
+                          size: selectedProduct.size
+                        })
+                      };
+                    } else {
+                      init = {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          productId: selectedProduct.productId,
+                          login: 'nologin',
+                          size: selectedProduct.size
+                        })
+                      };
+                    }
+                    fetch('/api/cart/productType', init)
+                      .then(res => {
+                        const paCopy = [...productArray];
+                        for (let i = paCopy.length - 1; i >= 0; i--) {
+                          if (paCopy[i].productId === selectedProduct.productId &&
+                            paCopy[i].size === selectedProduct.size) {
+                            paCopy.splice(i, 1);
+                          }
+                        }
+                        dispatch({ type: STOCK, payload: paCopy });
+                        dispatch({ type: POP, payload: { type: null } });
+                      });
+                  }
                 }
               }>Confirm delete</button>
               <button onClick={
