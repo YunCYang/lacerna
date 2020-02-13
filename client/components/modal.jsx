@@ -84,8 +84,13 @@ const Modal = props => {
             <div className='button'>
               <button onClick={
                 () => {
-                  props.history.push('/');
-                  dispatch({ type: POP, payload: { type: null } });
+                  fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
+                    .then(res => res.json())
+                    .then(res => {
+                      props.history.push('/');
+                      dispatch({ type: STOCK, payload: res });
+                      dispatch({ type: POP, payload: { type: null } });
+                    });
                 }
               }>Return</button>
             </div>

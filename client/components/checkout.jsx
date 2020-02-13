@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { POP } from '../common/constants/action-types';
 
 const Checkout = props => {
   const [emailIsInvalid, setEmailIsInvalid] = React.useState(null);
@@ -6,6 +8,8 @@ const Checkout = props => {
   const [lnIsInvalid, setLnIsInvalid] = React.useState(null);
   const [addressIsInvalid, setAddressIsInvalid] = React.useState(null);
   const [ccIsInvalid, setCcIsInvalid] = React.useState(null);
+  const userId = useSelector(state => state.auth.auth);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -77,7 +81,36 @@ const Checkout = props => {
       </div>
       <div className="button">
         <button type='button' onClick={
-          () => null
+          () => {
+            let init = {};
+            if (userId) {
+              init = {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  status: 'true',
+                  login: 'login',
+                  userId: userId
+                })
+              };
+            } else {
+              init = {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  status: 'true',
+                  login: 'nologin'
+                })
+              };
+            }
+            fetch('/api/cart/status', init)
+              .then(res => res.json())
+              .then(res => dispatch({ type: POP, payload: { type: 'checkOut' } }));
+          }
         }>Checkout</button>
         <button type='button' onClick={
           () => props.setView('cart')

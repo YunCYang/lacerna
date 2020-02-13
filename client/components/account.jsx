@@ -46,16 +46,10 @@ const Account = props => {
                             if (res.error[0] === 'e' && res.error[1] === 'm' &&
                               res.error[2] === 'a' && res.error[3] === 'i' &&
                               res.error[4] === 'l') {
-                              setAccountMatch({
-                                type: 'email',
-                                isMatch: false
-                              });
+                              setAccountMatch({ type: 'email', isMatch: false });
                             }
                           } else if (typeof res === 'object') {
-                            setAccountMatch({
-                              type: 'password',
-                              isMatch: false
-                            });
+                            setAccountMatch({ type: 'password', isMatch: false });
                           } else {
                             const init = {
                               method: 'PUT',
@@ -71,18 +65,9 @@ const Account = props => {
                                 fetch(`/api/product/cart/${res}/login`)
                                   .then(res => res.json())
                                   .then(productResult => {
-                                    dispatch({
-                                      type: STOCK,
-                                      payload: productResult
-                                    });
-                                    setAccountMatch({
-                                      type: null,
-                                      isMatch: true
-                                    });
-                                    dispatch({
-                                      type: AUTH,
-                                      payload: res
-                                    });
+                                    dispatch({ type: STOCK, payload: productResult });
+                                    setAccountMatch({ type: null, isMatch: true });
+                                    dispatch({ type: AUTH, payload: res });
                                     props.history.push('/');
                                   });
                               });
@@ -133,16 +118,10 @@ const Account = props => {
                             if (res.error[0] === 'e' && res.error[1] === 'm' &&
                               res.error[2] === 'a' && res.error[3] === 'i' &&
                               res.error[4] === 'l') {
-                              setAccountMatch({
-                                type: 'email',
-                                isMatch: false
-                              });
+                              setAccountMatch({ type: 'email', isMatch: false });
                             }
                           } else if (typeof res === 'object') {
-                            setAccountMatch({
-                              type: 'password',
-                              isMatch: false
-                            });
+                            setAccountMatch({ type: 'password', isMatch: false });
                           } else {
                             const init = {
                               method: 'PUT',
@@ -158,18 +137,9 @@ const Account = props => {
                                 fetch(`/api/product/cart/${res}/login`)
                                   .then(res => res.json())
                                   .then(productResult => {
-                                    dispatch({
-                                      type: STOCK,
-                                      payload: productResult
-                                    });
-                                    setAccountMatch({
-                                      type: null,
-                                      isMatch: true
-                                    });
-                                    dispatch({
-                                      type: AUTH,
-                                      payload: res
-                                    });
+                                    dispatch({ type: STOCK, payload: productResult });
+                                    setAccountMatch({ type: null, isMatch: true });
+                                    dispatch({ type: AUTH, payload: res });
                                     props.history.push('/');
                                   });
                               });
@@ -218,16 +188,10 @@ const Account = props => {
                       if (res.error[0] === 'e' && res.error[1] === 'm' &&
                         res.error[2] === 'a' && res.error[3] === 'i' &&
                         res.error[4] === 'l') {
-                        setAccountMatch({
-                          type: 'email',
-                          isMatch: false
-                        });
+                        setAccountMatch({ type: 'email', isMatch: false });
                       }
                     } else if (typeof res === 'object') {
-                      setAccountMatch({
-                        type: 'password',
-                        isMatch: false
-                      });
+                      setAccountMatch({ type: 'password', isMatch: false });
                     } else {
                       const init = {
                         method: 'PUT',
@@ -243,18 +207,9 @@ const Account = props => {
                           fetch(`/api/product/cart/${res}/login`)
                             .then(res => res.json())
                             .then(productResult => {
-                              dispatch({
-                                type: STOCK,
-                                payload: productResult
-                              });
-                              setAccountMatch({
-                                type: null,
-                                isMatch: true
-                              });
-                              dispatch({
-                                type: AUTH,
-                                payload: res
-                              });
+                              dispatch({ type: STOCK, payload: productResult });
+                              setAccountMatch({ type: null, isMatch: true });
+                              dispatch({ type: AUTH, payload: res });
                               props.history.push('/');
                             });
                         });
