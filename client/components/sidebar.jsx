@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH } from '../common/constants/action-types';
+import { SEARCH, POP } from '../common/constants/action-types';
 
 const Sidebar = () => {
   const [types, setTypes] = React.useState([]);
@@ -9,6 +9,7 @@ const Sidebar = () => {
   const [showMenu, setShowMenu] = React.useState('closed');
   const dispatch = useDispatch();
   const menuOpen = useSelector(state => state.shadow.shadow);
+  const userId = useSelector(state => state.auth.auth);
 
   React.useEffect(
     () => {
@@ -37,6 +38,22 @@ const Sidebar = () => {
     }>{item.typeName}</span>);
   };
 
+  const switchAccountLink = () => {
+    if (userId) {
+      return (
+        <span onClick={
+          () => dispatch({ type: POP, payload: { type: 'account' } })
+        }>Log Out</span>
+      );
+    } else {
+      return (
+        <Link to='/account'>
+          <span>Log In / Sign Up</span>
+        </Link>
+      );
+    }
+  };
+
   return (
     <menu className={showMenu}>
       <div className='product'>
@@ -63,9 +80,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div>
-        <Link to='/account'>
-          <span>Log In / Sign Up</span>
-        </Link>
+        {switchAccountLink()}
       </div>
     </menu>
   );

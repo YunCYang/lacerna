@@ -18,9 +18,6 @@ const Header = props => {
       const unlisten = props.history.listen(() => {
         setSearchShown(false);
       });
-      // fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
-      //   .then(res => res.json())
-      //   .then(res => setProductQuantity(res.length));
       setProductQuantity(productArray ? productArray.length : 0);
       return () => unlisten();
     }

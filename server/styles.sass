@@ -364,6 +364,173 @@ div.account
       text-decoration: underline
       cursor: pointer
 
+div.cart
+  width: 100vw
+  display: flex
+  flex-direction: column
+
+  div
+    display: flex
+
+  div.title
+    justify-content: center
+
+    span
+      font-family: $font-display
+      font-size: 1.5em
+
+  div.content
+    width: 100%
+    padding: 2% 5%
+    flex-direction: column
+    font-family: $font-content
+
+    div.cart-item
+
+      div.image
+        width: 30%
+        object-fit: contain
+
+        img
+          width: 100%
+          cursor: pointer
+
+      div.info
+        align-items: center
+
+        div
+          margin: 0.5em
+
+        div.name-size
+          cursor: pointer
+
+        div.price-qt
+          div.price
+            min-width: 60px
+            align-items: center
+
+          div.qt
+            & *
+              margin: 0
+
+            div.qt-input
+              align-items: center
+
+              input
+                height: 54.67px
+                width: 4em
+                padding: 4px 10px
+                color: #15323A
+                text-align: center
+
+            div.qt-button
+              flex-direction: column
+
+              button
+                border: 1px solid #8A999D
+                padding: 5px 10px
+                color: #8A999D
+                cursor: pointer
+
+              button:hover
+                background-color: #50666C
+                color: #FFF
+                border-color: #50666C
+      div.remove
+        span
+          text-decoration: underline
+          cursor: pointer
+
+    div.form
+      width: 100%
+      padding: 1em 15%
+      font-family: $font-content
+      flex-direction: column
+
+      div
+        margin: 0.5em 0
+        flex-direction: column
+        width: 100%
+
+        div.form-name
+          align-items: center
+          font-family: $font-display
+
+        div.form-input
+          width: 100%
+          align-items: center
+
+          input
+            width: 100%
+            height: 3em
+            padding: 0 1%
+
+          span.invalid
+            color: #ff1744
+            transition: all 0.5s ease
+
+            &.shown
+              height: 21px
+
+            &.hidden
+              height: 0
+              opacity: 0
+
+      div.shipping
+        div.form-input
+          flex-direction: column
+
+          div
+            flex-direction: row
+            align-items: center
+
+          div.name
+            div
+              flex-direction: column
+
+            input
+              width: 100%
+
+          div.address
+            flex-direction: column
+
+          div.name-error
+            justify-content: space-evenly
+
+    div.total
+      padding: 2% 3em
+      justify-content: flex-end
+      font-size: 1.5em
+
+  div.button
+    width: 100%
+    justify-content: flex-end
+    padding: 2% 5em
+
+    button
+      border: 1px solid #8A999D
+      padding: 5px 10px
+      color: #8A999D
+      border-radius: 5px
+      cursor: pointer
+      margin: 0 1em
+      font-family: $font-display
+
+    button:hover
+      background-color: #50666C
+      color: #FFF
+      border-color: #50666C
+
+    button:first-child
+      color: #EB425B
+      border-color: #EB425B
+
+    button:first-child:hover
+      border-color: #BD3245
+      background-color: #BD3245
+      color: #FFF
+
+
 footer
   font-family: $font-content
   background-color: #15323A

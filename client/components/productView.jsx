@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH, STOCK } from '../common/constants/action-types';
+import { SEARCH, STOCK, POP, SELECT_PRODUCT } from '../common/constants/action-types';
 
 const ProductView = props => {
   const [quantity, setQuantity] = React.useState('1');
@@ -13,13 +13,23 @@ const ProductView = props => {
       <div>
         <span onClick={
           () => {
-            dispatch({
-              type: SEARCH,
-              payload: {
-                type: props.selected.type,
-                value: props.selected.value
-              }
-            });
+            if (props.selected) {
+              dispatch({
+                type: SEARCH,
+                payload: {
+                  type: props.selected.type,
+                  value: props.selected.value
+                }
+              });
+            } else {
+              dispatch({
+                type: SEARCH,
+                payload: {
+                  type: 'type',
+                  value: 'all'
+                }
+              });
+            }
           }
         }>&lt; Back to Product</span>
       </div>
@@ -128,25 +138,26 @@ const ProductView = props => {
                       };
                     }
                     const request = [];
-                    for (let i = 0; i < quantity; i++) request.push('/api/cart/product');
-                    Promise.all(
-                      request.map(item => {
-                        return fetch(item, init)
-                          .then(res => res.json())
-                          .then(res => false);
-                      })
-                    ).then(
-                      () => {
-                        fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
-                          .then(res => res.json())
-                          .then(res => {
-                            dispatch({
-                              type: STOCK,
-                              payload: res
+                    if (quantity > 1) for (let i = 0; i < quantity - 1; i++) request.push('/api/cart/product');
+                    fetch('/api/cart/product', init)
+                      .then(res => res.json)
+                      .then(res => Promise.all(
+                        request.map(item => {
+                          return fetch(item, init)
+                            .then(res => res.json())
+                            .then(res => false);
+                        })
+                      )).then(
+                        () => {
+                          fetch(`/api/product/cart/${userId || 1}/${userId ? 'login' : 'nologin'}`)
+                            .then(res => res.json())
+                            .then(res => {
+                              dispatch({ type: STOCK, payload: res });
+                              dispatch({ type: SELECT_PRODUCT, payload: props.product });
+                              dispatch({ type: POP, payload: { type: 'addToCart' } });
                             });
-                          });
-                      }
-                    );
+                        }
+                      );
                   }
                 }>Add to Cart</button>
               </div>
