@@ -190,7 +190,7 @@ app.get('/api/product/cart/:userId/:login', (req, res, next) => {
   const getUserSql = `
     select *
       from "cart"
-     where "userId" = $1;
+     where "userId" = $1 and "status" is null;
   `;
   const getCartUserSql = `
        select *
@@ -199,14 +199,18 @@ app.get('/api/product/cart/:userId/:login', (req, res, next) => {
         where "cartId" = (
           select "cartId"
             from "cart"
-           where "userId" = $1
+           where "userId" = $1 and "status" is null
         );
   `;
   const getCartSessionSql = `
        select *
          from "product" p
     left join "cartProduct" c on p."productId" = c."productId"
-        where "cartId" = $1;
+        where "cartId" = (
+          select "cartId"
+            from "cart"
+           where "cartId" = $1 and "status" is null
+        );
   `;
   const value = [parseInt(req.params.userId)];
   const cartSessionValue = [req.session.cartId];
