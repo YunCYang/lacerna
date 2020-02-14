@@ -3,6 +3,7 @@
 $font-logo: 'Cinzel Decorative', cursive
 $font-content: 'EB Garamond', serif
 $font-display: 'Playfair Display', serif
+$noOfSlides: 3
 
 *
   box-sizing: border-box
@@ -140,6 +141,137 @@ menu
 div.main
   min-height: calc( 100vh - 325px )
   width: 100vw
+
+  div.home
+    width: 100%
+
+    div.carousel
+      height: 80vh
+      width: 100%
+      overflow: hidden
+      position: relative
+
+      div.controls,
+      input.activator
+        display: none
+
+      @for $num from 1 to $noOfSlides + 1
+        input.activator:nth-of-type(#{$num})
+          &:checked~div.track
+            transform: translateX(calc((#{$num} - 1) * 100% * -1 ))
+          &:checked~div.slide:nth-of-type(#{$num})
+            transition: opacity 0.5s, transform 0.5s
+            top: 0
+            left: 0
+            right: 0
+            opacity: 1
+          &:checked~div.controls:nth-of-type(#{$num})
+            display: block
+            opacity: 1
+          &:checked~div.indicators
+            label.indicator:nth-of-type(#{$num})
+              opacity: 1
+
+      div.controls
+        label.control
+          height: 30px
+          width: 30px
+          margin-top: -15px
+          position: absolute
+          top: 50%
+          cursor: pointer
+          border-width: 5px 5px 0 0
+          display: block
+          border-style: solid
+          border-color: #FAFAFA
+          opacity: 0.35
+          z-index: 3
+          outline: 0
+
+          &:hover
+            opacity: 1
+
+        .control-backward
+          left: 30px
+          transform: rotate(-135deg)
+
+        .control-forward
+          right: 30px
+          transform: rotate(45deg)
+
+      div.indicators
+        position: absolute
+        bottom: 20px
+        width: 100%
+        text-align: center
+
+        label.indicator
+          height: 15px
+          width: 15px
+          border-radius: 100%
+          display: inline-block
+          z-index: 2
+          cursor: pointer
+          opacity: 0.35
+          margin: 0 2.5px 0 2.5px
+          background-color: #FAFAFA
+
+          &:hover
+            opacity: 0.75
+
+      div.track
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        transition: transform 0.5s ease 0s
+
+        div.slide
+          display: block
+          top: 0
+          left: 0
+          right: 0
+          opacity: 1
+          overflow: hidden
+          height: 100%
+          position: absolute
+          object-fit: cover
+          cursor: pointer
+          @for $num from 1 to $noOfSlides + 1
+            &:nth-of-type(#{$num})
+              transform: translateX(calc((#{$num} - 1) * 100%))
+
+          img
+            width: 100%
+
+          h1
+            font-size: 30px
+            line-height: 50px
+            color: #FFF
+            position: absolute
+            width: 100%
+            margin-top: -25px
+            text-shadow: #000 1px 0 5px
+            font-family: $font-logo
+
+          &:nth-of-type(1)
+            h1
+              top: 10%
+              text-align: left
+              padding: 0 5%
+
+          &:nth-of-type(2)
+            h1
+              top: 10%
+              text-align: right
+              padding: 0 5%
+
+          &:nth-of-type(3)
+            h1
+              bottom: 10%
+              text-align: right
+              padding: 0 5%
 
   div.product
     width: 100%
@@ -384,6 +516,9 @@ div.cart
     padding: 2% 5%
     flex-direction: column
     font-family: $font-content
+
+    div.cart-item-list
+      flex-direction: column
 
     div.cart-item
 
