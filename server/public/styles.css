@@ -308,6 +308,83 @@ div.main div.home div.carousel div.track div.slide:nth-of-type(3) h1 {
   text-align: right;
   padding: 0 5%;
 }
+div.main div.home div.new-product {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  position: relative;
+  margin-top: 2em;
+}
+div.main div.home div.new-product div {
+  display: flex;
+}
+div.main div.home div.new-product div.title {
+  margin-bottom: 1em;
+  justify-content: center;
+}
+div.main div.home div.new-product div.title div.wrapper {
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+  font-size: 2em;
+  padding: 0.5em 0;
+  width: 40%;
+  border-bottom: solid 1px #000;
+}
+div.main div.home div.new-product div.new-content {
+  flex-direction: row;
+  width: 100%;
+}
+div.main div.home div.new-product div.wrapper {
+  width: 100%;
+}
+div.main div.home div.new-product div.wrapper div.container {
+  width: 30%;
+  display: flex;
+  margin: 1%;
+  flex-direction: column;
+  position: relative;
+}
+div.main div.home div.new-product div.wrapper div.container div.image-container,
+div.main div.home div.new-product div.wrapper div.container div.info-container {
+  width: 100%;
+  padding: 1%;
+  position: relative;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container {
+  display: flex;
+  flex-direction: column;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container div:first-child span {
+  font-family: "Playfair Display", serif;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container div {
+  display: flex;
+  padding: 1%;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container div span {
+  margin: auto;
+  text-align: center;
+  font-family: "EB Garamond", serif;
+}
+div.main div.home div.new-product div.wrapper div.container img {
+  position: absolute;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  top: 5%;
+}
+div.main div.home div.new-product div.wrapper div.container .hidden {
+  opacity: 0;
+}
+div.main div.home div.new-product div.wrapper div.container .shown {
+  transform: scale(1.1);
+}
+div.main div.home div.new-product div.wrapper div.container div.image-container {
+  object-fit: contain;
+  width: 100%;
+  height: 33vw;
+  overflow: hidden;
+}
 div.main div.product {
   width: 100%;
   display: flex;
