@@ -3,6 +3,7 @@
 $font-logo: 'Cinzel Decorative', cursive
 $font-content: 'EB Garamond', serif
 $font-display: 'Playfair Display', serif
+$noOfSlides: 3
 
 *
   box-sizing: border-box
@@ -141,6 +142,214 @@ div.main
   min-height: calc( 100vh - 325px )
   width: 100vw
 
+  div.home
+    width: 100%
+
+    div.carousel
+      height: 80vh
+      width: 100%
+      overflow: hidden
+      position: relative
+
+      div.controls,
+      input.activator
+        display: none
+
+      @for $num from 1 to $noOfSlides + 1
+        input.activator:nth-of-type(#{$num})
+          &:checked~div.track
+            transform: translateX(calc((#{$num} - 1) * 100% * -1 ))
+          &:checked~div.slide:nth-of-type(#{$num})
+            transition: opacity 0.5s, transform 0.5s
+            top: 0
+            left: 0
+            right: 0
+            opacity: 1
+          &:checked~div.controls:nth-of-type(#{$num})
+            display: block
+            opacity: 1
+          &:checked~div.indicators
+            label.indicator:nth-of-type(#{$num})
+              opacity: 1
+
+      div.controls
+        label.control
+          height: 30px
+          width: 30px
+          margin-top: -15px
+          position: absolute
+          top: 50%
+          cursor: pointer
+          border-width: 5px 5px 0 0
+          display: block
+          border-style: solid
+          border-color: #FAFAFA
+          opacity: 0.35
+          z-index: 3
+          outline: 0
+
+          &:hover
+            opacity: 1
+
+        .control-backward
+          left: 30px
+          transform: rotate(-135deg)
+
+        .control-forward
+          right: 30px
+          transform: rotate(45deg)
+
+      div.indicators
+        position: absolute
+        bottom: 20px
+        width: 100%
+        text-align: center
+
+        label.indicator
+          height: 15px
+          width: 15px
+          border-radius: 100%
+          display: inline-block
+          z-index: 2
+          cursor: pointer
+          opacity: 0.35
+          margin: 0 2.5px 0 2.5px
+          background-color: #FAFAFA
+
+          &:hover
+            opacity: 0.75
+
+      div.track
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        transition: transform 0.5s ease 0s
+
+        div.slide
+          display: block
+          top: 0
+          left: 0
+          right: 0
+          opacity: 1
+          overflow: hidden
+          height: 100%
+          position: absolute
+          object-fit: cover
+          cursor: pointer
+          @for $num from 1 to $noOfSlides + 1
+            &:nth-of-type(#{$num})
+              transform: translateX(calc((#{$num} - 1) * 100%))
+
+          img
+            width: 100%
+
+          h1
+            font-size: 30px
+            line-height: 50px
+            color: #FFF
+            position: absolute
+            width: 100%
+            margin-top: -25px
+            text-shadow: #000 1px 0 5px
+            font-family: $font-logo
+
+          &:nth-of-type(1)
+            h1
+              top: 10%
+              text-align: left
+              padding: 0 5%
+
+          &:nth-of-type(2)
+            h1
+              top: 10%
+              text-align: right
+              padding: 0 5%
+
+          &:nth-of-type(3)
+            h1
+              bottom: 10%
+              text-align: right
+              padding: 0 5%
+
+    div.new-product
+      width: 100%
+      display: flex
+      flex-direction: column
+      padding: 1%
+      position: relative
+      margin-top: 2em
+
+      div
+        display: flex
+
+      div.title
+        margin-bottom: 1em
+        justify-content: center
+
+        div.wrapper
+          justify-content: center
+          font-family: $font-display
+          font-size: 2em
+          padding: 0.5em 0
+          width: 40%
+          border-bottom: solid 1px #000
+
+      div.new-content
+        flex-direction: row
+        width: 100%
+
+      div.wrapper
+        width: 100%
+
+        div.container
+          width: 30%
+          display: flex
+          margin: 1%
+          flex-direction: column
+          position: relative
+
+          div.image-container,
+          div.info-container
+            width: 100%
+            padding: 1%
+            position: relative
+
+          div.info-container
+            display: flex
+            flex-direction: column
+
+            div:first-child span
+              font-family: $font-display
+
+            div
+              display: flex
+              padding: 1%
+
+              span
+                margin: auto
+                text-align: center
+                font-family: $font-content
+
+          img
+            position: absolute
+            width: 100%
+            transition: all 0.3s ease-in-out
+            top: 5%
+
+          .hidden
+            opacity: 0
+
+          .shown
+            transform: scale(1.1)
+
+          div.image-container
+            object-fit: contain
+            width: 100%
+            height: 33vw
+            overflow: hidden
+
   div.product
     width: 100%
     display: flex
@@ -246,6 +455,7 @@ div.main
           >div
             display: flex
             margin: 40px 0
+            justify-content: center
 
           label
             border: 1px solid #C5CCCE
@@ -272,7 +482,7 @@ div.main
 
           button
             border: 1px solid #8A999D
-            padding: 5px 10px
+            padding: 5px 8px
             color: #8A999D
             border-radius: 5px
             cursor: pointer
@@ -384,6 +594,9 @@ div.cart
     padding: 2% 5%
     flex-direction: column
     font-family: $font-content
+
+    div.cart-item-list
+      flex-direction: column
 
     div.cart-item
 
@@ -536,6 +749,7 @@ footer
   background-color: #15323A
   color: #fff
   display: flex
+  width: 100vw
 
   div
     width: 50%
@@ -549,6 +763,7 @@ footer
 
   p
     color: #8A999D
+    margin: 10px
 
   div.link p
     text-align: center
@@ -612,3 +827,112 @@ div.modal-shadow
           background-color: #50666C
           color: #FFF
           border-color: #50666C
+
+@media screen and (max-width: 800px)
+  footer
+    div
+      padding: 10px 5px
+
+@media screen and (max-width: 685px)
+  div.main
+    div.product-detail
+      align-items: center
+
+      >div
+        width: 90%
+
+      div.detail-info
+        flex-direction: column
+
+        >div
+          width: 100%
+
+        div:first-child
+          margin: 0 0 10px 0
+
+        div.detail-info-name,
+        div.detail-info-price,
+        div.detail-info-desc
+          display: flex
+          justify-content: center
+
+      div.detail-desc
+        flex-direction: column-reverse
+        align-items: center
+
+        >div
+          width: 90%
+
+        div.detail-desc-desc
+          margin: 0
+
+@media screen and (max-width: 565px)
+  header
+    justify-content: space-evenly
+
+    div.logo p
+      font-size: 1.7em
+
+    div.menu
+      &>div
+        margin: 0 5px
+        max-width: 120px
+
+    div.menu>div i
+      font-size: 1.2em
+      margin: 15px 2px 10px 10px
+
+@media screen and (max-width: 520px)
+  div.main
+    div.home
+      div.carousel
+        height: 40vh
+
+    div.cart
+      div.content
+        div.cart-item-list
+          div.cart-item
+            div.image
+              width: 40%
+              height: 100%
+
+            div.info
+              flex-direction: column
+              justify-content: center
+              width: 60%
+
+        div.total
+          font-size: 1.2em
+
+@media screen and (max-width: 440px)
+  footer
+    flex-direction: column-reverse
+
+    div
+      width: 90%
+
+@media screen and (max-width: 400px)
+  header
+    >div
+      padding: 5px
+
+    div.logo p
+      font-size: 1.5em
+
+    div.menu>div i
+      font-size: 1em
+
+    span
+      font-size: 1em
+      top: 0
+
+    .nav-icon::after,
+    .nav-icon::before,
+    .nav-icon div
+      display: block
+      content: ''
+      background-color: #000
+      height: 4px
+      margin: 4px 0
+      border-radius: 3px
+      transition: all .2s ease-in-out

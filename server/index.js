@@ -234,6 +234,36 @@ app.get('/api/product/cart/:userId/:login', (req, res, next) => {
     }
   } else next(new ClientError(`login status ${req.params.login} is not valid`, 400));
 });
+// get most frequent appeared product in cartProduct
+app.get('/api/product/popular', (req, res, next) => {
+  const sql = `
+    select *
+      from "product"
+     where "productId" = (
+       select c."productId"
+         from "cartProduct" c
+         left join "product" p on c."productId" = p."productId"
+        group by c."productId"
+        order by count(c."productId") desc
+        limit 1
+     );
+  `;
+  db.query(sql)
+    .then(result => res.status(200).json(result.rows[0]))
+    .catch(err => next(err));
+});
+// get 3 newest added products
+app.get('/api/product/new', (req, res, next) => {
+  const sql = `
+    select *
+      from "product"
+     order by "createdAt" desc
+     limit 3;
+  `;
+  db.query(sql)
+    .then(result => res.status(200).json(result.rows))
+    .catch(err => next(err));
+});
 // get all types
 app.get('/api/type/all', (req, res, next) => {
   const sql = `

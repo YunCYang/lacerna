@@ -141,6 +141,250 @@ div.main {
   min-height: calc( 100vh - 325px );
   width: 100vw;
 }
+div.main div.home {
+  width: 100%;
+}
+div.main div.home div.carousel {
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+div.main div.home div.carousel div.controls,
+div.main div.home div.carousel input.activator {
+  display: none;
+}
+div.main div.home div.carousel input.activator:nth-of-type(1):checked ~ div.track {
+  transform: translateX(calc((1 - 1) * 100% * -1 ));
+}
+div.main div.home div.carousel input.activator:nth-of-type(1):checked ~ div.slide:nth-of-type(1) {
+  transition: opacity 0.5s, transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(1):checked ~ div.controls:nth-of-type(1) {
+  display: block;
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(1):checked ~ div.indicators label.indicator:nth-of-type(1) {
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(2):checked ~ div.track {
+  transform: translateX(calc((2 - 1) * 100% * -1 ));
+}
+div.main div.home div.carousel input.activator:nth-of-type(2):checked ~ div.slide:nth-of-type(2) {
+  transition: opacity 0.5s, transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(2):checked ~ div.controls:nth-of-type(2) {
+  display: block;
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(2):checked ~ div.indicators label.indicator:nth-of-type(2) {
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(3):checked ~ div.track {
+  transform: translateX(calc((3 - 1) * 100% * -1 ));
+}
+div.main div.home div.carousel input.activator:nth-of-type(3):checked ~ div.slide:nth-of-type(3) {
+  transition: opacity 0.5s, transform 0.5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(3):checked ~ div.controls:nth-of-type(3) {
+  display: block;
+  opacity: 1;
+}
+div.main div.home div.carousel input.activator:nth-of-type(3):checked ~ div.indicators label.indicator:nth-of-type(3) {
+  opacity: 1;
+}
+div.main div.home div.carousel div.controls label.control {
+  height: 30px;
+  width: 30px;
+  margin-top: -15px;
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+  border-width: 5px 5px 0 0;
+  display: block;
+  border-style: solid;
+  border-color: #FAFAFA;
+  opacity: 0.35;
+  z-index: 3;
+  outline: 0;
+}
+div.main div.home div.carousel div.controls label.control:hover {
+  opacity: 1;
+}
+div.main div.home div.carousel div.controls .control-backward {
+  left: 30px;
+  transform: rotate(-135deg);
+}
+div.main div.home div.carousel div.controls .control-forward {
+  right: 30px;
+  transform: rotate(45deg);
+}
+div.main div.home div.carousel div.indicators {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+div.main div.home div.carousel div.indicators label.indicator {
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+  display: inline-block;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0.35;
+  margin: 0 2.5px 0 2.5px;
+  background-color: #FAFAFA;
+}
+div.main div.home div.carousel div.indicators label.indicator:hover {
+  opacity: 0.75;
+}
+div.main div.home div.carousel div.track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: transform 0.5s ease 0s;
+}
+div.main div.home div.carousel div.track div.slide {
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  overflow: hidden;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  cursor: pointer;
+}
+div.main div.home div.carousel div.track div.slide:nth-of-type(1) {
+  transform: translateX(calc((1 - 1) * 100%));
+}
+div.main div.home div.carousel div.track div.slide:nth-of-type(2) {
+  transform: translateX(calc((2 - 1) * 100%));
+}
+div.main div.home div.carousel div.track div.slide:nth-of-type(3) {
+  transform: translateX(calc((3 - 1) * 100%));
+}
+div.main div.home div.carousel div.track div.slide img {
+  width: 100%;
+}
+div.main div.home div.carousel div.track div.slide h1 {
+  font-size: 30px;
+  line-height: 50px;
+  color: #FFF;
+  position: absolute;
+  width: 100%;
+  margin-top: -25px;
+  text-shadow: #000 1px 0 5px;
+  font-family: "Cinzel Decorative", cursive;
+}
+div.main div.home div.carousel div.track div.slide:nth-of-type(1) h1 {
+  top: 10%;
+  text-align: left;
+  padding: 0 5%;
+}
+div.main div.home div.carousel div.track div.slide:nth-of-type(2) h1 {
+  top: 10%;
+  text-align: right;
+  padding: 0 5%;
+}
+div.main div.home div.carousel div.track div.slide:nth-of-type(3) h1 {
+  bottom: 10%;
+  text-align: right;
+  padding: 0 5%;
+}
+div.main div.home div.new-product {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  position: relative;
+  margin-top: 2em;
+}
+div.main div.home div.new-product div {
+  display: flex;
+}
+div.main div.home div.new-product div.title {
+  margin-bottom: 1em;
+  justify-content: center;
+}
+div.main div.home div.new-product div.title div.wrapper {
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+  font-size: 2em;
+  padding: 0.5em 0;
+  width: 40%;
+  border-bottom: solid 1px #000;
+}
+div.main div.home div.new-product div.new-content {
+  flex-direction: row;
+  width: 100%;
+}
+div.main div.home div.new-product div.wrapper {
+  width: 100%;
+}
+div.main div.home div.new-product div.wrapper div.container {
+  width: 30%;
+  display: flex;
+  margin: 1%;
+  flex-direction: column;
+  position: relative;
+}
+div.main div.home div.new-product div.wrapper div.container div.image-container,
+div.main div.home div.new-product div.wrapper div.container div.info-container {
+  width: 100%;
+  padding: 1%;
+  position: relative;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container {
+  display: flex;
+  flex-direction: column;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container div:first-child span {
+  font-family: "Playfair Display", serif;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container div {
+  display: flex;
+  padding: 1%;
+}
+div.main div.home div.new-product div.wrapper div.container div.info-container div span {
+  margin: auto;
+  text-align: center;
+  font-family: "EB Garamond", serif;
+}
+div.main div.home div.new-product div.wrapper div.container img {
+  position: absolute;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  top: 5%;
+}
+div.main div.home div.new-product div.wrapper div.container .hidden {
+  opacity: 0;
+}
+div.main div.home div.new-product div.wrapper div.container .shown {
+  transform: scale(1.1);
+}
+div.main div.home div.new-product div.wrapper div.container div.image-container {
+  object-fit: contain;
+  width: 100%;
+  height: 33vw;
+  overflow: hidden;
+}
 div.main div.product {
   width: 100%;
   display: flex;
@@ -242,6 +486,7 @@ div.main div.product-detail div.detail-info div.detail-info-info div.detail-info
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form > div {
   display: flex;
   margin: 40px 0;
+  justify-content: center;
 }
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form label {
   border: 1px solid #C5CCCE;
@@ -268,7 +513,7 @@ div.main div.product-detail div.detail-info div.detail-info-info div.detail-info
 }
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form button {
   border: 1px solid #8A999D;
-  padding: 5px 10px;
+  padding: 5px 8px;
   color: #8A999D;
   border-radius: 5px;
   cursor: pointer;
@@ -379,6 +624,9 @@ div.cart div.content {
   padding: 2% 5%;
   flex-direction: column;
   font-family: "EB Garamond", serif;
+}
+div.cart div.content div.cart-item-list {
+  flex-direction: column;
 }
 div.cart div.content div.cart-item div.image {
   width: 30%;
@@ -525,6 +773,7 @@ footer {
   background-color: #15323A;
   color: #fff;
   display: flex;
+  width: 100vw;
 }
 footer div {
   width: 50%;
@@ -538,6 +787,7 @@ footer h4 {
 }
 footer p {
   color: #8A999D;
+  margin: 10px;
 }
 footer div.link p {
   text-align: center;
@@ -603,6 +853,112 @@ div.modal-shadow div.modal div.button button:hover {
   background-color: #50666C;
   color: #FFF;
   border-color: #50666C;
+}
+
+@media screen and (max-width: 800px) {
+  footer div {
+    padding: 10px 5px;
+  }
+}
+@media screen and (max-width: 685px) {
+  div.main div.product-detail {
+    align-items: center;
+  }
+  div.main div.product-detail > div {
+    width: 90%;
+  }
+  div.main div.product-detail div.detail-info {
+    flex-direction: column;
+  }
+  div.main div.product-detail div.detail-info > div {
+    width: 100%;
+  }
+  div.main div.product-detail div.detail-info div:first-child {
+    margin: 0 0 10px 0;
+  }
+  div.main div.product-detail div.detail-info div.detail-info-name,
+div.main div.product-detail div.detail-info div.detail-info-price,
+div.main div.product-detail div.detail-info div.detail-info-desc {
+    display: flex;
+    justify-content: center;
+  }
+  div.main div.product-detail div.detail-desc {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  div.main div.product-detail div.detail-desc > div {
+    width: 90%;
+  }
+  div.main div.product-detail div.detail-desc div.detail-desc-desc {
+    margin: 0;
+  }
+}
+@media screen and (max-width: 565px) {
+  header {
+    justify-content: space-evenly;
+  }
+  header div.logo p {
+    font-size: 1.7em;
+  }
+  header div.menu > div {
+    margin: 0 5px;
+    max-width: 120px;
+  }
+  header div.menu > div i {
+    font-size: 1.2em;
+    margin: 15px 2px 10px 10px;
+  }
+}
+@media screen and (max-width: 520px) {
+  div.main div.home div.carousel {
+    height: 40vh;
+  }
+  div.main div.cart div.content div.cart-item-list div.cart-item div.image {
+    width: 40%;
+    height: 100%;
+  }
+  div.main div.cart div.content div.cart-item-list div.cart-item div.info {
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+  }
+  div.main div.cart div.content div.total {
+    font-size: 1.2em;
+  }
+}
+@media screen and (max-width: 440px) {
+  footer {
+    flex-direction: column-reverse;
+  }
+  footer div {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 400px) {
+  header > div {
+    padding: 5px;
+  }
+  header div.logo p {
+    font-size: 1.5em;
+  }
+  header div.menu > div i {
+    font-size: 1em;
+  }
+  header span {
+    font-size: 1em;
+    top: 0;
+  }
+  header .nav-icon::after,
+header .nav-icon::before,
+header .nav-icon div {
+    display: block;
+    content: "";
+    background-color: #000;
+    height: 4px;
+    margin: 4px 0;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

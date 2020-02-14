@@ -67,7 +67,7 @@ const Cart = props => {
           <span>Cart</span>
         </div>
         <div className='content'>
-          <div>
+          <div className='cart-item-list'>
             {productArray.length ? createProductList()
               : <h3>Your cart is empty</h3>}
           </div>

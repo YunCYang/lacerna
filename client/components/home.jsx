@@ -1,19 +1,13 @@
 import React from 'react';
+import Carousel from './carousel';
+import NewProduct from './newProduct';
 
 const Home = () => {
 
-  React.useEffect(
-    () => {
-      fetch('/api/product/all')
-        .then(res => res.json())
-        .then(res => null);
-    }, []
-  );
-
   return (
-    <div>
-      <div></div>
-      <div></div>
+    <div className='home'>
+      <Carousel />
+      <NewProduct />
     </div>
   );
 };
