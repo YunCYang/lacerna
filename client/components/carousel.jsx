@@ -145,6 +145,13 @@ const Carousel = props => {
     }
   };
 
+  React.useEffect(
+    () => {
+      const unlisten = props.history.listen(() => stopTime());
+      return () => unlisten();
+    }
+  );
+
   return (
     <div className="carousel">
       <input type="radio" name="carousel" id="popular" className="activator" defaultChecked

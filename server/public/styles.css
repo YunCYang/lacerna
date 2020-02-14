@@ -486,6 +486,7 @@ div.main div.product-detail div.detail-info div.detail-info-info div.detail-info
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form > div {
   display: flex;
   margin: 40px 0;
+  justify-content: center;
 }
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form label {
   border: 1px solid #C5CCCE;
@@ -512,7 +513,7 @@ div.main div.product-detail div.detail-info div.detail-info-info div.detail-info
 }
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form button {
   border: 1px solid #8A999D;
-  padding: 5px 10px;
+  padding: 5px 8px;
   color: #8A999D;
   border-radius: 5px;
   cursor: pointer;
@@ -772,6 +773,7 @@ footer {
   background-color: #15323A;
   color: #fff;
   display: flex;
+  width: 100vw;
 }
 footer div {
   width: 50%;
@@ -785,6 +787,7 @@ footer h4 {
 }
 footer p {
   color: #8A999D;
+  margin: 10px;
 }
 footer div.link p {
   text-align: center;
@@ -850,6 +853,112 @@ div.modal-shadow div.modal div.button button:hover {
   background-color: #50666C;
   color: #FFF;
   border-color: #50666C;
+}
+
+@media screen and (max-width: 800px) {
+  footer div {
+    padding: 10px 5px;
+  }
+}
+@media screen and (max-width: 685px) {
+  div.main div.product-detail {
+    align-items: center;
+  }
+  div.main div.product-detail > div {
+    width: 90%;
+  }
+  div.main div.product-detail div.detail-info {
+    flex-direction: column;
+  }
+  div.main div.product-detail div.detail-info > div {
+    width: 100%;
+  }
+  div.main div.product-detail div.detail-info div:first-child {
+    margin: 0 0 10px 0;
+  }
+  div.main div.product-detail div.detail-info div.detail-info-name,
+div.main div.product-detail div.detail-info div.detail-info-price,
+div.main div.product-detail div.detail-info div.detail-info-desc {
+    display: flex;
+    justify-content: center;
+  }
+  div.main div.product-detail div.detail-desc {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  div.main div.product-detail div.detail-desc > div {
+    width: 90%;
+  }
+  div.main div.product-detail div.detail-desc div.detail-desc-desc {
+    margin: 0;
+  }
+}
+@media screen and (max-width: 565px) {
+  header {
+    justify-content: space-evenly;
+  }
+  header div.logo p {
+    font-size: 1.7em;
+  }
+  header div.menu > div {
+    margin: 0 5px;
+    max-width: 120px;
+  }
+  header div.menu > div i {
+    font-size: 1.2em;
+    margin: 15px 2px 10px 10px;
+  }
+}
+@media screen and (max-width: 520px) {
+  div.main div.home div.carousel {
+    height: 40vh;
+  }
+  div.main div.cart div.content div.cart-item-list div.cart-item div.image {
+    width: 40%;
+    height: 100%;
+  }
+  div.main div.cart div.content div.cart-item-list div.cart-item div.info {
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+  }
+  div.main div.cart div.content div.total {
+    font-size: 1.2em;
+  }
+}
+@media screen and (max-width: 440px) {
+  footer {
+    flex-direction: column-reverse;
+  }
+  footer div {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 400px) {
+  header > div {
+    padding: 5px;
+  }
+  header div.logo p {
+    font-size: 1.5em;
+  }
+  header div.menu > div i {
+    font-size: 1em;
+  }
+  header span {
+    font-size: 1em;
+    top: 0;
+  }
+  header .nav-icon::after,
+header .nav-icon::before,
+header .nav-icon div {
+    display: block;
+    content: "";
+    background-color: #000;
+    height: 4px;
+    margin: 4px 0;
+    border-radius: 3px;
+    transition: all 0.2s ease-in-out;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */
