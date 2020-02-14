@@ -7,7 +7,37 @@ const Carousel = props => {
   const [popularProduct, setPopularProduct] = React.useState(null);
   const [newProduct, setNewProduct] = React.useState(null);
   const [randomProduct, setRandomProduct] = React.useState(null);
+  const [auto, setAuto] = React.useState(true);
+  const [currentSlide, setCurrentSlide] = React.useState('popular');
   const dispatch = useDispatch();
+  const slideShow = React.useRef();
+
+  const forwardTime = () => {
+    if (auto) {
+      slideShow.current = setInterval(
+        () => {
+          if (currentSlide === 'popular') {
+            document.querySelector('#new').checked = true;
+            setCurrentSlide('new');
+          } else if (currentSlide === 'new') {
+            document.querySelector('#random').checked = true;
+            setCurrentSlide('random');
+          } else if (currentSlide === 'random') {
+            document.querySelector('#popular').checked = true;
+            setCurrentSlide('popular');
+          }
+        }, 3000
+      );
+    } else {
+      slideShow.current = setInterval(
+        () => {
+          setAuto(true);
+        }, 3000
+      );
+    }
+  };
+
+  const stopTime = () => clearInterval(slideShow.current);
 
   React.useEffect(
     () => {
@@ -42,6 +72,13 @@ const Carousel = props => {
     }, []
   );
 
+  React.useEffect(
+    () => {
+      stopTime();
+      forwardTime();
+    }
+  );
+
   const createSlide = () => {
     if (randomProduct) {
       return (
@@ -50,6 +87,7 @@ const Carousel = props => {
             <img src={`/images/${popularProduct.image1}.jpg`} alt={popularProduct.productName}
               onClick={
                 () => {
+                  stopTime();
                   props.history.push('/product');
                   dispatch({
                     type: SEARCH,
@@ -66,6 +104,7 @@ const Carousel = props => {
             <img src={`/images/${newProduct.image1}.jpg`} alt={newProduct.productName}
               onClick={
                 () => {
+                  stopTime();
                   props.history.push('/product');
                   dispatch({
                     type: SEARCH,
@@ -82,6 +121,7 @@ const Carousel = props => {
             <img src={`/images/${randomProduct.image1}.jpg`} alt={randomProduct.productName}
               onClick={
                 () => {
+                  stopTime();
                   props.history.push('/product');
                   dispatch({
                     type: SEARCH,
@@ -107,36 +147,94 @@ const Carousel = props => {
 
   return (
     <div className="carousel">
-      <input type="radio" name="carousel" id="popular" className="activator" defaultChecked/>
-      <input type="radio" name="carousel" id="new" className="activator" />
-      <input type="radio" name="carousel" id="random" className="activator" />
+      <input type="radio" name="carousel" id="popular" className="activator" defaultChecked
+        onChange={
+          e => setCurrentSlide('popular')
+        }/>
+      <input type="radio" name="carousel" id="new" className="activator"
+        onChange={
+          e => setCurrentSlide('new')
+        }/>
+      <input type="radio" name="carousel" id="random" className="activator"
+        onChange={
+          e => setCurrentSlide('random')
+        }/>
       <div className="controls">
-        <label htmlFor="random" className='control control-backward'></label>
-        <label htmlFor="new" className='control control-forward'></label>
+        <label htmlFor="random" className='control control-backward' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('random');
+          }
+        }></label>
+        <label htmlFor="new" className='control control-forward' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('new');
+          }
+        }></label>
       </div>
       <div className="controls">
-        <label htmlFor="popular" className='control control-backward'></label>
-        <label htmlFor="random" className='control control-forward'></label>
+        <label htmlFor="popular" className='control control-backward' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('popular');
+          }
+        }></label>
+        <label htmlFor="random" className='control control-forward' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('random');
+          }
+        }></label>
       </div>
       <div className="controls">
-        <label htmlFor="new" className='control control-backward'></label>
-        <label htmlFor="popular" className='control control-forward'></label>
+        <label htmlFor="new" className='control control-backward' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('new');
+          }
+        }></label>
+        <label htmlFor="popular" className='control control-forward' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('popular');
+          }
+        }></label>
       </div>
       <div className="track">
         {createSlide()}
       </div>
       <div className="indicators">
-        <label htmlFor="popular" className='indicator'></label>
-        <label htmlFor="new" className='indicator'></label>
-        <label htmlFor="random" className='indicator'></label>
+        <label htmlFor="popular" className='indicator' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('popular');
+          }
+        }></label>
+        <label htmlFor="new" className='indicator' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('new');
+          }
+        }></label>
+        <label htmlFor="random" className='indicator' onClick={
+          () => {
+            stopTime();
+            setAuto(false);
+            setCurrentSlide('random');
+          }
+        }></label>
       </div>
     </div>
   );
 };
 
 export default withRouter(Carousel);
-
-// <i className="fas fa-chevron-left"></i>
-// <i className="fas fa-chevron-right"></i>
-// <i className="fas fa-circle"></i>
-// <i className="far fa-circle"></i>
