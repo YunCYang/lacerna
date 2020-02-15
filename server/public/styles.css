@@ -5,7 +5,11 @@
 
 body {
   margin: 0;
+}
+
+div#root {
   overflow-x: hidden;
+  position: relative;
 }
 
 a {
@@ -927,6 +931,10 @@ div.main div.product-detail div.detail-info div.detail-info-desc {
   }
 }
 @media screen and (max-width: 440px) {
+  div.main div.home div.new-product div.title div.wrapper span {
+    font-size: 0.7em;
+  }
+
   footer {
     flex-direction: column-reverse;
   }
