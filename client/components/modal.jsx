@@ -63,6 +63,7 @@ const Modal = props => {
                           dispatch({ type: STOCK, payload: res });
                           dispatch({ type: AUTH, payload: null });
                           dispatch({ type: POP, payload: { type: null } });
+                          sessionStorage.removeItem('id');
                         });
                     });
                 }
