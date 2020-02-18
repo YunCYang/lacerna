@@ -490,7 +490,7 @@ div.main div.product-detail div.detail-info div.detail-info-info div.detail-info
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form > div {
   display: flex;
   margin: 40px 0;
-  justify-content: center;
+  justify-content: start;
 }
 div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form label {
   border: 1px solid #C5CCCE;
@@ -884,6 +884,9 @@ div.modal-shadow div.modal div.button button:hover {
 div.main div.product-detail div.detail-info div.detail-info-price,
 div.main div.product-detail div.detail-info div.detail-info-desc {
     display: flex;
+    justify-content: center;
+  }
+  div.main div.product-detail div.detail-info div.detail-info-info div.detail-info-form > div {
     justify-content: center;
   }
   div.main div.product-detail div.detail-desc {
