@@ -53,6 +53,11 @@ Link: https://lacerna.yuncyang.com
 - CSS3
 - AWS EC2
 
+## Preview
+![](./server/public/images/lacerna_new.png)
+![](./server/public/images/lacerna_productDetail.png)
+![](./server/public/images/lacerna_cart.png)
+
 ## Development
 ### System Requirements
 - NodeJs 10 or higher
