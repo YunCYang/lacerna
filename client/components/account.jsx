@@ -68,6 +68,7 @@ const Account = props => {
                                     dispatch({ type: STOCK, payload: productResult });
                                     setAccountMatch({ type: null, isMatch: true });
                                     dispatch({ type: AUTH, payload: res });
+                                    sessionStorage.setItem('id', res);
                                     props.history.push('/');
                                   });
                               });
@@ -140,6 +141,7 @@ const Account = props => {
                                     dispatch({ type: STOCK, payload: productResult });
                                     setAccountMatch({ type: null, isMatch: true });
                                     dispatch({ type: AUTH, payload: res });
+                                    sessionStorage.setItem('id', res);
                                     props.history.push('/');
                                   });
                               });
@@ -210,6 +212,7 @@ const Account = props => {
                               dispatch({ type: STOCK, payload: productResult });
                               setAccountMatch({ type: null, isMatch: true });
                               dispatch({ type: AUTH, payload: res });
+                              sessionStorage.setItem('id', res);
                               props.history.push('/');
                             });
                         });

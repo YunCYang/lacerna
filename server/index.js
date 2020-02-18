@@ -72,8 +72,8 @@ app.post('/api/auth/signup', (req, res, next) => {
   if (req.body.userType !== 'true' && req.body.userType !== 'false') {
     next(new ClientError(`user type ${req.body.userType} is not valid`, 400));
   }
-  const emailTest = /^[\w.=-]+@[\w.-]+\.[\w]{2,4}$/;
-  if (!emailTest.exec(req.body.email)) next(new ClientError(`email ${req.body.email} is not valid`, 400));
+  // const emailTest = /^[\w.=-]+@[\w.-]+\.[\w]{2,4}$/;
+  // if (!emailTest.exec(req.body.email)) next(new ClientError(`email ${req.body.email} is not valid`, 400));
   const pwdTest = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-])(?=.{8,})/;
   if (!pwdTest.exec(req.body.password)) next(new ClientError(`password ${req.body.password} is not valid`, 400));
   const checkEmailSql = `
@@ -90,22 +90,20 @@ app.post('/api/auth/signup', (req, res, next) => {
   let userType = null;
   if (req.body.userType === 'true') userType = true;
   else userType = false;
-  if (emailTest.exec(req.body.email) && pwdTest.exec(req.body.password)) {
-    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-      if (err) next(err);
-      const insertValue = [req.body.firstName, req.body.lastName, req.body.email, hash, userType];
-      db.query(checkEmailSql, emailValue)
-        .then(emailResult => {
-          if (emailResult.rows[0]) next(new ClientError(`email ${req.body.email} already exists`, 400));
-          else {
-            db.query(insertSql, insertValue)
-              .then(insertResult => res.status(201).json(insertResult.rows))
-              .catch(err => next(err));
-          }
-        })
-        .catch(err => next(err));
-    });
-  } else next(new ClientError('email or password is not valid', 400));
+  bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+    if (err) next(err);
+    const insertValue = [req.body.firstName, req.body.lastName, req.body.email, hash, userType];
+    db.query(checkEmailSql, emailValue)
+      .then(emailResult => {
+        if (emailResult.rows[0]) next(new ClientError(`email ${req.body.email} already exists`, 400));
+        else {
+          db.query(insertSql, insertValue)
+            .then(insertResult => res.status(201).json(insertResult.rows))
+            .catch(err => next(err));
+        }
+      })
+      .catch(err => next(err));
+  });
 });
 // get all products
 app.get('/api/product/all', (req, res, next) => {
@@ -672,7 +670,7 @@ app.put('/api/cart/userType', (req, res, next) => {
   const sessionValue = [req.session.cartId];
   const userValue = [parseInt(req.body.userId)];
   const putUserValue = [parseInt(req.body.userId), req.session.cartId];
-  if (!req.session.cartId) next(new ClientError('cart does not exist', 404));
+  if (!req.session.cartId) res.status(204).json([]);
   else {
     db.query(getUserSql, userValue)
       .then(userResult => {
