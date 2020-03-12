@@ -35,7 +35,7 @@ const Header = props => {
           <i className="fas fa-search" onClick={
             () => setSearchShown(!searchShown)
           }></i>
-          <i className={userId ? 'fas fa-user-alt-slash' : 'fas fa-user'} onClick={
+          <i className={userId ? 'fas fa-sign-out-alt' : 'fas fa-sign-in-alt'} onClick={
             () => {
               if (!userId) props.history.push('/account');
               else {

@@ -101,7 +101,6 @@ const NewAccount = props => {
                     if (emailDuplicate) setEmailDuplicate(false);
                     props.setCreateAccount(false);
                   }
-                  // props.setCreateAccount(false);
                 });
             } else {
               if (!document.querySelector('#firstName').checkValidity()) setFnIsValid(false);
