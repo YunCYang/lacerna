@@ -211,6 +211,7 @@ const CartItem = props => {
                   if (quantity === 1) {
                     dispatch({ type: SELECT_PRODUCT, payload: props.item.detail });
                     dispatch({ type: POP, payload: { type: 'deleteProduct', fn: 'delOne' } });
+                    setDisabled(false);
                   } else {
                     let init = {};
                     if (userId) {
