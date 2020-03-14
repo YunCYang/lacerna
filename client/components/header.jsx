@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { SHOW_SHADOW, SEARCH, POP } from '../common/constants/action-types';
+import { SelectedContext } from './app';
 
 const Header = props => {
   const menuOpen = useSelector(state => state.shadow.shadow);
@@ -10,6 +11,7 @@ const Header = props => {
   const [searchShown, setSearchShown] = React.useState(false);
   const [productQuantity, setProductQuantity] = React.useState(0);
   const dispatch = useDispatch();
+  const searchParam = React.useContext(SelectedContext);
 
   const menuClick = () => menuOpen ? 'open' : 'close';
 
@@ -57,6 +59,10 @@ const Header = props => {
               e => {
                 if (e.key === 'Enter') {
                   props.history.push('/product');
+                  searchParam.setSearched({
+                    type: 'productSearch',
+                    value: e.target.value
+                  });
                   dispatch({
                     type: SEARCH,
                     payload: {

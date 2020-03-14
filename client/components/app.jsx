@@ -11,25 +11,31 @@ import Footer from './footer';
 import Shadow from './shadow';
 import Modal from './modal';
 
+export const SelectedContext = React.createContext(null);
+
 const App = () => {
+  const [searched, setSearched] = React.useState(null);
+
   return (
-    <Router>
-      <Switch>
-        <>
-          <Header />
-          <Sidebar />
-          <div className='main'>
-            <Route exact path="/" render={() => <Home />} />
-            <Route exact path="/product" render={() => <Product />} />
-            <Route exact path="/account" render={() => <Account />} />
-            <Route exact path="/cart" render={() => <Cart />} />
-          </div>
-          <Footer />
-          <Shadow />
-          <Modal />
-        </>
-      </Switch>
-    </Router>
+    <SelectedContext.Provider value={{ searched, setSearched }}>
+      <Router>
+        <Switch>
+          <>
+            <Header />
+            <Sidebar />
+            <div className='main'>
+              <Route exact path="/" render={() => <Home />} />
+              <Route exact path="/product" render={() => <Product />} />
+              <Route exact path="/account" render={() => <Account />} />
+              <Route exact path="/cart" render={() => <Cart />} />
+            </div>
+            <Footer />
+            <Shadow />
+            <Modal />
+          </>
+        </Switch>
+      </Router>
+    </SelectedContext.Provider>
   );
 };
 
