@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH, POP } from '../common/constants/action-types';
+import { SEARCH, POP, SHOW_SHADOW } from '../common/constants/action-types';
 import { SelectedContext } from './app';
 
 const Sidebar = () => {
@@ -42,6 +42,7 @@ const Sidebar = () => {
             value: e.currentTarget.textContent
           }
         });
+        dispatch({ type: SHOW_SHADOW, payload: !menuOpen });
       }
     }>{item.typeName}</span>);
   };
@@ -50,13 +51,18 @@ const Sidebar = () => {
     if (userId) {
       return (
         <span onClick={
-          () => dispatch({ type: POP, payload: { type: 'account' } })
+          () => {
+            dispatch({ type: POP, payload: { type: 'account' } });
+            dispatch({ type: SHOW_SHADOW, payload: !menuOpen });
+          }
         }>Log Out</span>
       );
     } else {
       return (
         <Link to='/account'>
-          <span>Log In / Sign Up</span>
+          <span onClick={
+            () => dispatch({ type: SHOW_SHADOW, payload: !menuOpen })
+          }>Log In / Sign Up</span>
         </Link>
       );
     }
@@ -86,6 +92,7 @@ const Sidebar = () => {
                     value: 'all'
                   }
                 });
+                dispatch({ type: SHOW_SHADOW, payload: !menuOpen });
               }}>All Products</span>
             {createProductList()}
           </Link>
