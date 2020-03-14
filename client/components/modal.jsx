@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { POP, AUTH, STOCK } from '../common/constants/action-types';
+import { POP, AUTH, STOCK, SEARCH } from '../common/constants/action-types';
+import { SelectedContext } from './app';
 
 const Modal = props => {
   const modalStatus = useSelector(state => {
@@ -20,6 +21,7 @@ const Modal = props => {
   const selectedProduct = useSelector(state => state.select.select);
   const productArray = useSelector(state => state.product.product);
   const dispatch = useDispatch();
+  const searchParam = React.useContext(SelectedContext);
 
   if (modalStatus) {
     if (modalStatus.type === 'disclaimer') {
@@ -108,7 +110,23 @@ const Modal = props => {
             <div className='button'>
               <button onClick={
                 () => {
-                  props.history.push('/product');
+                  if (searchParam.searched) {
+                    dispatch({
+                      type: SEARCH,
+                      payload: {
+                        type: searchParam.searched.type,
+                        value: searchParam.searched.value
+                      }
+                    });
+                  } else {
+                    dispatch({
+                      type: SEARCH,
+                      payload: {
+                        type: 'type',
+                        value: 'all'
+                      }
+                    });
+                  }
                   dispatch({ type: POP, payload: { type: null } });
                 }
               }>Continue shopping</button>
