@@ -11,6 +11,26 @@ const Checkout = props => {
   const userId = useSelector(state => state.auth.auth);
   const dispatch = useDispatch();
 
+  const checkIfValid = () => {
+    if (!document.querySelector('#email').checkValidity() || !document.querySelector('#firstName').checkValidity() ||
+      !document.querySelector('#lastName').checkValidity() || !document.querySelector('#address').checkValidity() ||
+      !document.querySelector('#cc').checkValidity()) {
+      if (!document.querySelector('#email').checkValidity()) setEmailIsInvalid(true);
+      if (!document.querySelector('#firstName').checkValidity()) setFnIsInvalid(true);
+      if (!document.querySelector('#lastName').checkValidity()) setLnIsInvalid(true);
+      if (!document.querySelector('#address').checkValidity()) setAddressIsInvalid(true);
+      if (!document.querySelector('#cc').checkValidity()) setCcIsInvalid(true);
+      return false;
+    } else {
+      setEmailIsInvalid(false);
+      setFnIsInvalid(false);
+      setLnIsInvalid(false);
+      setAddressIsInvalid(false);
+      setCcIsInvalid(false);
+      return true;
+    }
+  };
+
   return (
     <>
       <div className="title">
@@ -82,34 +102,36 @@ const Checkout = props => {
       <div className="button">
         <button type='button' onClick={
           () => {
-            let init = {};
-            if (userId) {
-              init = {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  status: 'true',
-                  login: 'login',
-                  userId: userId
-                })
-              };
-            } else {
-              init = {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  status: 'true',
-                  login: 'nologin'
-                })
-              };
+            if (checkIfValid()) {
+              let init = {};
+              if (userId) {
+                init = {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    status: 'true',
+                    login: 'login',
+                    userId: userId
+                  })
+                };
+              } else {
+                init = {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    status: 'true',
+                    login: 'nologin'
+                  })
+                };
+              }
+              fetch('/api/cart/status', init)
+                .then(res => res.json())
+                .then(res => dispatch({ type: POP, payload: { type: 'checkOut' } }));
             }
-            fetch('/api/cart/status', init)
-              .then(res => res.json())
-              .then(res => dispatch({ type: POP, payload: { type: 'checkOut' } }));
           }
         }>Checkout</button>
         <button type='button' onClick={
