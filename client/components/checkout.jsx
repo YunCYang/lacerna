@@ -43,10 +43,11 @@ const Checkout = props => {
               <span>Contact Info</span>
             </div>
             <div className="form-input">
-              <input type="email" name="email" id="email" required
+              <input type="text" name="email" id="email" required
                 placeholder='Email Address' onBlur={
                   e => setEmailIsInvalid(!e.target.checkValidity())
-                }/>
+                }
+                pattern='^[\w.=-]+@[\w.-]+\.[\w]{2,4}$'/>
               <span className={`invalid ${emailIsInvalid ? 'shown' : 'hidden'}`}>Email is not valid</span>
             </div>
           </div>

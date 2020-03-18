@@ -701,11 +701,6 @@ app.delete('/api/cart/user', (req, res, next) => {
       from "cart"
      where "userId" = $1;
   `;
-  // const getSessionSql = `
-  //   select *
-  //     from "cart"
-  //    where "sessionId" = $1;
-  // `;
   const delCPUserSql = `
     delete from "cartProduct"
           using "cart"
@@ -716,20 +711,10 @@ app.delete('/api/cart/user', (req, res, next) => {
     delete from "cart"
           where "userId" = $1;
   `;
-  // const delCPSessionSql = `
-  //   delete from "cartProduct"
-  //         using "cart"
-  //         where "cartProduct"."cartId" = "cart"."cartId"
-  //           and "cart"."sessionId" = $1;
-  // `;
   const delCPSessionSql = `
     delete from "cartProduct"
           where "cartId" = $1;
   `;
-  // const delSessionSql = `
-  //   delete from "cart"
-  //         where "sessionId" = $1;
-  // `;
   const delSessionSql = `
     delete from "cart"
           where "cartId" = $1;
@@ -752,20 +737,6 @@ app.delete('/api/cart/user', (req, res, next) => {
       })
       .catch(err => next(err));
   } else if (req.body.login === 'nologin') {
-    // db.query(getSessionSql, userValue)
-    //   .then(sessionResult => {
-    //     if (!sessionResult.rows[0]) next(new ClientError(`cart from session id ${req.body.userId} does not exist`, 404));
-    //     else {
-    //       db.query(delCPSessionSql, userValue)
-    //         .then(result => {
-    //           db.query(delSessionSql, userValue)
-    //             .then(result => res.status(204).json([]))
-    //             .catch(err => next(err));
-    //         })
-    //         .catch(err => next(err));
-    //     }
-    //   })
-    //   .catch(err => next(err));
     if (!req.session.cartId) next(new ClientError('cart does not exist', 404));
     else {
       db.query(delCPSessionSql, sessionValue)
