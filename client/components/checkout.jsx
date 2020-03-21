@@ -59,27 +59,27 @@ const Checkout = props => {
               <div className='name'>
                 <div className='firstName'>
                   <input type="text" name="firstName" id="firstName" required
-                    placeholder='First Name' onBlur={
+                    placeholder='First Name' pattern='^\S+.*$' onBlur={
                       e => setFnIsInvalid(!e.target.checkValidity())
                     }/>
                 </div>
                 <div className="lastName">
                   <input type="text" name="lastName" id="lastName" required
-                    placeholder='Last Name' onBlur={
+                    placeholder='Last Name' pattern='^\S+.*$' onBlur={
                       e => setLnIsInvalid(!e.target.checkValidity())
                     }/>
                 </div>
               </div>
               <div className='name-error'>
-                <span className={`invalid ${fnIsInvalid ? 'shown' : 'hidden'}`}>First name is required</span>
-                <span className={`invalid ${lnIsInvalid ? 'shown' : 'hidden'}`}>Last name is required</span>
+                <span className={`invalid ${fnIsInvalid ? 'shown' : 'hidden'}`}>First name is invalid</span>
+                <span className={`invalid ${lnIsInvalid ? 'shown' : 'hidden'}`}>Last name is invalid</span>
               </div>
               <div className='address'>
                 <input type="text" name="address" id="address" required
-                  placeholder='Address' onBlur={
+                  placeholder='Address' pattern='^\S+.*$' onBlur={
                     e => setAddressIsInvalid(!e.target.checkValidity())
                   }/>
-                <span className={`invalid ${addressIsInvalid ? 'shown' : 'hidden'}`}>Address is required</span>
+                <span className={`invalid ${addressIsInvalid ? 'shown' : 'hidden'}`}>Address is invalid</span>
               </div>
             </div>
           </div>
@@ -89,10 +89,10 @@ const Checkout = props => {
             </div>
             <div className="form-input">
               <input type="text" name="cc" id="cc" required
-                placeholder='Credit Card Number' onBlur={
+                placeholder='Credit Card Number' pattern='^\d+$' onBlur={
                   e => setCcIsInvalid(!e.target.checkValidity())
                 }/>
-              <span className={`invalid ${ccIsInvalid ? 'shown' : 'hidden'}`}>Credit card is not valid</span>
+              <span className={`invalid ${ccIsInvalid ? 'shown' : 'hidden'}`}>Credit card is invalid</span>
             </div>
           </div>
         </div>
